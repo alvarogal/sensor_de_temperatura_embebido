@@ -1,0 +1,38 @@
+Cmp-Mod V01 Created by Cvpcb (2014-08-29 BZR 5106)-product   date = lun 15 sep 2014 10:16:34 COT
+
+BeginCmp
+TimeStamp = /5415CC8A;
+Reference = C1;
+ValeurCmp = 10nF;
+IdModule  = SMD_Packages:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /5415CC1F;
+Reference = C2;
+ValeurCmp = 0.1uF;
+IdModule  = SMD_Packages:SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /5415CB95;
+Reference = IC1;
+ValeurCmp = MAX31855;
+IdModule  = SMD_Packages:SOIC-8-N;
+EndCmp
+
+BeginCmp
+TimeStamp = /5415CD74;
+Reference = P1;
+ValeurCmp = CONN_01X02;
+IdModule  = Connect:bornier2;
+EndCmp
+
+BeginCmp
+TimeStamp = /5415CD1B;
+Reference = P2;
+ValeurCmp = CONN_01X06;
+IdModule  = Pin_Headers:Pin_Header_Straight_1x06;
+EndCmp
+
+EndListe

@@ -1,0 +1,182 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:maxim-ic
+LIBS:hija3-cache
+EELAYER 24 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MAX31855 IC1
+U 1 1 5415CB95
+P 6400 3000
+F 0 "IC1" H 6250 3400 60  0000 C CNN
+F 1 "MAX31855" H 6400 2500 60  0000 C CNN
+F 2 "SMD_Packages:SOIC-8-N" H 6400 3000 60  0001 C CNN
+F 3 "" H 6400 3000 60  0000 C CNN
+F 4 "MAX31855[K,J,N,S,T,E,R]ASA+" H 6400 2300 60  0001 C CNN "Part"
+F 5 "Maxim" H 6300 2400 60  0001 C CNN "Manufacturer"
+	1    6400 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C2
+U 1 1 5415CC1F
+P 5750 2800
+F 0 "C2" H 5750 2900 40  0000 L CNN
+F 1 "0.1uF" H 5756 2715 40  0000 L CNN
+F 2 "SMD_Packages:SMD-0805" H 5788 2650 30  0001 C CNN
+F 3 "" H 5750 2800 60  0000 C CNN
+	1    5750 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C1
+U 1 1 5415CC8A
+P 5150 3500
+F 0 "C1" H 5150 3600 40  0000 L CNN
+F 1 "10nF" H 5156 3415 40  0000 L CNN
+F 2 "SMD_Packages:SMD-0805" H 5188 3350 30  0001 C CNN
+F 3 "" H 5150 3500 60  0000 C CNN
+	1    5150 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X06 P2
+U 1 1 5415CD1B
+P 7800 3050
+F 0 "P2" H 7800 3400 50  0000 C CNN
+F 1 "CONN_01X06" V 7900 3050 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x06" H 7800 3050 60  0001 C CNN
+F 3 "" H 7800 3050 60  0000 C CNN
+	1    7800 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X02 P1
+U 1 1 5415CD74
+P 4700 3450
+F 0 "P1" H 4700 3600 50  0000 C CNN
+F 1 "CONN_01X02" V 4800 3450 50  0000 C CNN
+F 2 "Connect:bornier2" H 4700 3450 60  0001 C CNN
+F 3 "" H 4700 3450 60  0000 C CNN
+	1    4700 3450
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR1
+U 1 1 5415D2B2
+P 5750 3100
+F 0 "#PWR1" H 5750 3100 30  0001 C CNN
+F 1 "GND" H 5750 3030 30  0001 C CNN
+F 2 "" H 5750 3100 60  0000 C CNN
+F 3 "" H 5750 3100 60  0000 C CNN
+	1    5750 3100
+	1    0    0    -1  
+$EndComp
+Connection ~ 5150 3300
+Connection ~ 5150 3700
+Connection ~ 5750 3000
+Connection ~ 7600 3100
+Wire Wire Line
+	5750 3000 5750 3100
+Wire Wire Line
+	4900 3400 4900 3300
+Wire Wire Line
+	4900 3300 5850 3300
+Wire Wire Line
+	4900 3500 4900 3700
+Wire Wire Line
+	4900 3700 5850 3700
+Wire Wire Line
+	6000 2750 6000 2600
+Wire Wire Line
+	6000 2600 5750 2600
+Wire Wire Line
+	6000 2950 5950 2950
+Wire Wire Line
+	5950 2950 5950 3000
+Wire Wire Line
+	5950 3000 5500 3000
+Wire Wire Line
+	5500 3000 5500 2400
+Wire Wire Line
+	5500 2400 7400 2400
+Wire Wire Line
+	7400 2400 7400 3000
+Wire Wire Line
+	7400 3000 7600 3000
+Wire Wire Line
+	6000 3350 5850 3350
+Wire Wire Line
+	5850 3350 5850 3700
+Wire Wire Line
+	6000 3150 5850 3150
+Wire Wire Line
+	5850 3150 5850 3300
+Wire Wire Line
+	5750 2600 5750 2500
+Wire Wire Line
+	5750 2500 7300 2500
+Wire Wire Line
+	7300 2500 7300 2900
+Wire Wire Line
+	7300 2900 7600 2900
+Wire Wire Line
+	7000 3050 7000 3300
+Wire Wire Line
+	7000 3300 7600 3300
+Wire Wire Line
+	7100 2950 7100 3200
+Wire Wire Line
+	7100 3200 7600 3200
+Wire Wire Line
+	6800 2850 7200 2850
+Wire Wire Line
+	7200 2850 7200 3100
+Wire Wire Line
+	7200 3100 7600 3100
+Wire Wire Line
+	6800 2950 7100 2950
+Wire Wire Line
+	7000 3050 6800 3050
+$EndSCHEMATC
