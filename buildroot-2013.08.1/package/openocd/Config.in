@@ -1,0 +1,10 @@
+config BR2_PACKAGE_OPENOCD
+	bool "openocd"
+	depends on BR2_TOOLCHAIN_HAS_THREADS #
+	help
+	  OpenOCD - Open On-Chip Debugger
+
+	  http://openocd.berlios.de/web/
+
+comment "openocd needs a toolchain with thread support"
+	depends on !BR2_TOOLCHAIN_HAS_THREADS
