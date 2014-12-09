@@ -1,0 +1,85 @@
+Instalando lua:
+
+lua.c:67:31: fatal error: readline/readline.h: No such file or directory
+ #include <readline/readline.h>
+
+Solución:
+sudo apt-get install libreadline-dev
+
+Compilando factory test
+
+/bin/sh: 1: xml2-config: not found
+
+Solucion:
+sudo apt-get install libxml2-dev
+
+
+fatal error: libusb.h: No such file or directory
+Solucion
+sudo apt-get install libusb-dev
+
+Package libusb-1.0 was not found in the pkg-config search path
+sudo apt-get install libusb-1.0-0-dev
+
+Error sin resolver
+skipping incompatible ../lib/libhwstub.a when searching for -lhwstub
+Prosible solucion: ir a la carpeta /Factory_Test/basic/hwstub/hwstub/lib/ y alli correr make clean, y make, esto deberia re compilarlo y hacerlo ejecutable, pero se presenta el siguiente error:
+
+lib/liblua.a(loadlib.o): undefined reference to symbol 'dlclose@@GLIBC_2.2.5'
+/usr/bin/ld: i386 architecture of input file `hwstub_load.o' is incompatible with i386:x86-64 output
+
+
+PENDIENTE
+
+
+sbloader: error while loading shared libraries: libusb-1.0.so.0: cannot open shared object file: No such file or directory
+
+El sbloader usa la libreria libusb-1.0.so.0 pero con una version para i386, en sistemas x64 se puede instalar mediante sudo apt-get install libusb-1.0-0-dev pero instala la libreria de x64, se debe entonces descargar la carpeta de http://packages.ubuntu.com/trusty/libusb-1.0-0
+teniendo en cuenta que el paquete corresponda a su version de ubuntu, y debe luego, descomprimir este paquete y compiar los dos archivos dentro de la carpeta lib (carpeta que se crea al descomprimir el paquete) y pegarlos asi:
+
+/lib/i386-linux-gnu/libusb-1.0.so.0
+/lib/i386-linux-gnu/libusb-1.0.so.0.1.0
+
+o instalar el paquete de la libreria
+
+
+Error al compilar bootloader
+
+ *** Unable to find the ncurses libraries or the
+ *** required header files.
+ *** 'make menuconfig' requires the ncurses libraries.
+ *** 
+ *** Install ncurses (ncurses-devel) and try again.
+
+Solucion:
+sudo apt-get install ncurses-dev
+
+Error:
+
+You must install 'svn' on your build machine
+  svn is usually part of the subversion package in your distribution
+
+solucion:
+sudo apt-get install subversion
+
+
+error compilando linux 
+Al ejecutar este comando, se presenta un error de un enlace roto a un archivo. En la carpeta
+buildroot-2013.08.1/output/host/usr/bin/ existen múltiples archivos que son enlaces a otros
+archivos ubicados en esa misma carpeta. El enlace roto se presenta en este archivo: arm-linux-
+ld.real, que apunta a arm-buildroot-linux-uclibcgnueabi-ld.real. Este problema se soluciona creando
+manualmente el enlace, así:
+$ ln -s arm-buildroot-linux-uclibcgnueabi-ld.real arm-linux-ld.real
+donde la opción “-s” crea un enlace simbólico entre ambos archivos
+
+pero HAY QUE ENTRAR A LA CARPETA DE buildroot-2013.08.1/output/host/usr/bin/ Y ALLI SE EJECUTA EL COMANDO DE LN
+
+Error al compilar sbloader
+/usr/include/i386-linux-gnu/sys/types.h file not found
+Solucion
+sudo apt-get install libc6-dev:i386
+
+Al compilar el archivo de ejemplo blink_without_linux sucede que el compilador que aparece en el archivo no es el compilador con el cual se va a realizar la compilaciion, para solucionarlo se debe abrir el archivo Makefile de la carpeta blink_without_linux y cambiar la linea por CROSS_COMPILE ?= arm-none-linux-gnueabi-
+ CROSS_COMPILE ?= arm-none-eabi-
+
+
