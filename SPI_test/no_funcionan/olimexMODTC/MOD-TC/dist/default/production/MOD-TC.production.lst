@@ -1,0 +1,3311 @@
+
+
+HI-TECH Software PIC PRO Macro Assembler V9.83 build 10920 
+                                                                                               Thu Jul 18 08:16:17 2013
+
+HI-TECH Software Omniscient Code Generator (PRO mode) build 10920
+     1                           	processor	16F1503
+     2                           	opt	pw 120
+     3                           	opt	pm
+     4                           	psect	config,global,class=CONFIG,delta=2
+     5                           	psect	text502,local,class=CODE,delta=2
+     6                           	psect	cinit,global,class=CODE,delta=2
+     7                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1
+     8                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1
+     9                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1
+    10                           	psect	maintext,global,class=CODE,delta=2
+    11                           	psect	text503,local,class=CODE,delta=2
+    12                           	psect	text504,local,class=CODE,delta=2
+    13                           	psect	text505,local,class=CODE,delta=2
+    14                           	psect	text506,local,class=CODE,delta=2
+    15                           	psect	text507,local,class=CODE,delta=2
+    16                           	psect	text508,local,class=CODE,delta=2
+    17                           	psect	text509,local,class=CODE,delta=2
+    18                           	psect	text510,local,class=CODE,delta=2
+    19                           	psect	text511,local,class=CODE,delta=2
+    20                           	psect	text512,local,class=CODE,delta=2
+    21                           	psect	text513,local,class=CODE,delta=2
+    22                           	psect	text514,local,class=CODE,delta=2
+    23                           	psect	text515,local,class=CODE,delta=2
+    24                           	psect	swtext1,local,class=CONST,delta=2
+    25                           	psect	swtext2,local,class=CONST,delta=2
+    26                           	psect	text516,local,class=CODE,delta=2
+    27                           	psect	text517,local,class=CODE,delta=2
+    28                           	psect	text518,local,class=CODE,delta=2
+    29                           	psect	text519,local,class=CODE,delta=2
+    30                           	psect	text520,local,class=CODE,delta=2
+    31                           	psect	text521,local,class=CODE,delta=2
+    32                           	psect	text522,local,class=CODE,delta=2
+    33                           	psect	text523,local,class=CODE,delta=2
+    34                           	psect	intentry,global,class=CODE,delta=2
+    35                           	psect	pa_nodes,global,class=CODE,delta=2
+    36                           	dabs	1,0x7E,2
+    37  000A                     	;#
+    38                           
+    39                           	psect	config
+    40  8007  FFA4               	dw	65444	;#
+    41  8008  DDFF               	dw	56831	;#
+    42                           
+    43                           	psect	text502
+    44  0000                     __ptext502:	
+    45  000C                     _PORTAbits	set	12
+    46  000E                     _PORTCbits	set	14
+    47  005F                     _GIE	set	95
+    48  009D                     _ADCON0bits	set	157
+    49  009E                     _ADCON1bits	set	158
+    50  009C                     _ADRESH	set	156
+    51  009B                     _ADRESL	set	155
+    52  0095                     _OPTION_REGbits	set	149
+    53  0099                     _OSCCONbits	set	153
+    54  009A                     _OSCSTATbits	set	154
+    55  008C                     _TRISAbits	set	140
+    56  008E                     _TRISCbits	set	142
+    57  010C                     _LATAbits	set	268
+    58  010E                     _LATCbits	set	270
+    59  018C                     _ANSELA	set	396
+    60  018C                     _ANSELAbits	set	396
+    61  018E                     _ANSELC	set	398
+    62  018E                     _ANSELCbits	set	398
+    63  0192                     _PMADRH	set	402
+    64  0191                     _PMADRL	set	401
+    65  0195                     _PMCON1bits	set	405
+    66  0196                     _PMCON2	set	406
+    67  0194                     _PMDATH	set	404
+    68  0193                     _PMDATL	set	403
+    69  020C                     _WPUAbits	set	524
+    70                           
+    71                           	psect	cinit
+    72  03B0                     start_initialization:	
+    73                           
+    74                           ; Clear objects allocated to BANK0
+    75  03B0  01B9               	clrf	__pbssBANK0& (0+127)
+    76  03B1  01BA               	clrf	(__pbssBANK0+1)& (0+127)
+    77  03B2  01BB               	clrf	(__pbssBANK0+2)& (0+127)
+    78  03B3  01BC               	clrf	(__pbssBANK0+3)& (0+127)
+    79  03B4  01BD               	clrf	(__pbssBANK0+4)& (0+127)
+    80  03B5                     end_of_initialization:	
+    81                           ;End of C runtime variable initialization code
+    82                           
+    83  03B5  0020               	movlb	0
+    84  03B6  2BBD               	ljmp	_main	;jump to C main() function
+    85                           
+    86                           	psect	bssBANK0
+    87  0039                     __pbssBANK0:	
+    88  0039                     _DATA_OUT:	
+    89  0039                     	ds	4
+    90  003D                     _ADDRESS:	
+    91  003D                     	ds	1
+    92                           
+    93                           	psect	cstackCOMMON
+    94  0070                     __pcstackCOMMON:	
+    95  0070                     ?_ConfigureOscillator:	
+    96  0070                     ??_ConfigureOscillator:	
+    97                           ; 0 bytes @ 0x0
+    98                           
+    99  0070                     ?_InitApp:	
+   100                           ; 0 bytes @ 0x0
+   101                           
+   102  0070                     ?_InitAddress:	
+   103                           ; 0 bytes @ 0x0
+   104                           
+   105  0070                     ?_StartSystem:	
+   106                           ; 0 bytes @ 0x0
+   107                           
+   108  0070                     ?_InitSPI:	
+   109                           ; 0 bytes @ 0x0
+   110                           
+   111  0070                     ?_CommandSetLat:	
+   112                           ; 0 bytes @ 0x0
+   113                           
+   114  0070                     ??_CommandSetLat:	
+   115                           ; 0 bytes @ 0x0
+   116                           
+   117  0070                     ?_CommandSetTris:	
+   118                           ; 0 bytes @ 0x0
+   119                           
+   120  0070                     ??_CommandSetTris:	
+   121                           ; 0 bytes @ 0x0
+   122                           
+   123  0070                     ?_CommandSetPullUps:	
+   124                           ; 0 bytes @ 0x0
+   125                           
+   126  0070                     ??_CommandSetPullUps:	
+   127                           ; 0 bytes @ 0x0
+   128                           
+   129  0070                     ?_UnlockFlash:	
+   130                           ; 0 bytes @ 0x0
+   131                           
+   132  0070                     ??_UnlockFlash:	
+   133                           ; 0 bytes @ 0x0
+   134                           
+   135  0070                     ?_StartI2C:	
+   136                           ; 0 bytes @ 0x0
+   137                           
+   138  0070                     ??_StartI2C:	
+   139                           ; 0 bytes @ 0x0
+   140                           
+   141  0070                     ??_ReadByteI2C:	
+   142                           ; 0 bytes @ 0x0
+   143                           
+   144  0070                     ?_StopI2C:	
+   145                           ; 0 bytes @ 0x0
+   146                           
+   147  0070                     ??_StopI2C:	
+   148                           ; 0 bytes @ 0x0
+   149                           
+   150  0070                     ?_DelaySPI:	
+   151                           ; 0 bytes @ 0x0
+   152                           
+   153  0070                     ??_DelaySPI:	
+   154                           ; 0 bytes @ 0x0
+   155                           
+   156  0070                     ?_isr:	
+   157                           ; 0 bytes @ 0x0
+   158                           
+   159  0070                     ??_isr:	
+   160                           ; 0 bytes @ 0x0
+   161                           
+   162  0070                     ?_main:	
+   163                           ; 0 bytes @ 0x0
+   164                           
+   165  0070                     ?_EraseFlash:	
+   166                           ; 0 bytes @ 0x0
+   167                           
+   168  0070                     ?_WriteFlash:	
+   169                           ; 0 bytes @ 0x0
+   170                           
+   171  0070                     ??_CommandGetPort:	
+   172                           ; 0 bytes @ 0x0
+   173                           
+   174  0070                     ?_CommandSetAddress:	
+   175                           ; 0 bytes @ 0x0
+   176                           
+   177  0070                     ?_ReadByteI2C:	
+   178                           ; 0 bytes @ 0x0
+   179                           
+   180  0070                     ?_CommandGetPort:	
+   181                           ; 1 bytes @ 0x0
+   182                           
+   183  0070                     ?_ReadFlash:	
+   184                           ; 1 bytes @ 0x0
+   185                           
+   186  0070                     ?_CommandGetAn:	
+   187                           ; 2 bytes @ 0x0
+   188                           
+   189  0070                     ?_ReadDataSPI:	
+   190                           ; 2 bytes @ 0x0
+   191                           
+   192  0070                     ReadByteI2C@data:	
+   193                           ; 4 bytes @ 0x0
+   194                           
+   195  0070                     ReadFlash@address:	
+   196                           ; 1 bytes @ 0x0
+   197                           
+   198  0070                     EraseFlash@address:	
+   199                           ; 2 bytes @ 0x0
+   200                           
+   201  0070                     WriteFlash@data:	
+   202                           ; 2 bytes @ 0x0
+   203                           
+   204  0070                     DelaySPI@i:	
+   205                           ; 2 bytes @ 0x0
+   206                           
+   207                           
+   208                           ; 2 bytes @ 0x0
+   209  0070                     	ds	1
+   210  0071                     CommandSetTris@data:	
+   211  0071                     CommandSetLat@data:	
+   212                           ; 1 bytes @ 0x1
+   213                           
+   214  0071                     CommandGetPort@data:	
+   215                           ; 1 bytes @ 0x1
+   216                           
+   217  0071                     CommandSetPullUps@data:	
+   218                           ; 1 bytes @ 0x1
+   219                           
+   220  0071                     ReadByteI2C@i:	
+   221                           ; 1 bytes @ 0x1
+   222                           
+   223                           
+   224                           ; 1 bytes @ 0x1
+   225  0071                     	ds	1
+   226  0072                     ??_InitApp:	
+   227  0072                     ??_InitSPI:	
+   228                           ; 0 bytes @ 0x2
+   229                           
+   230  0072                     ??_ReadFlash:	
+   231                           ; 0 bytes @ 0x2
+   232                           
+   233  0072                     ??_EraseFlash:	
+   234                           ; 0 bytes @ 0x2
+   235                           
+   236  0072                     ??_CommandGetAn:	
+   237                           ; 0 bytes @ 0x2
+   238                           
+   239  0072                     ReadFlash@data:	
+   240                           ; 0 bytes @ 0x2
+   241                           
+   242  0072                     WriteFlash@address:	
+   243                           ; 2 bytes @ 0x2
+   244                           
+   245                           
+   246                           ; 2 bytes @ 0x2
+   247  0072                     	ds	1
+   248  0073                     CommandGetAn@data:	
+   249                           
+   250                           ; 2 bytes @ 0x3
+   251  0073                     	ds	1
+   252  0074                     ??_InitAddress:	
+   253  0074                     ??_ReadDataSPI:	
+   254                           ; 0 bytes @ 0x4
+   255                           
+   256  0074                     ??_WriteFlash:	
+   257                           ; 0 bytes @ 0x4
+   258                           
+   259  0074                     ??_CommandSetAddress:	
+   260                           ; 0 bytes @ 0x4
+   261                           
+   262  0074                     CommandSetAddress@data:	
+   263                           ; 0 bytes @ 0x4
+   264                           
+   265  0074                     InitAddress@address:	
+   266                           ; 1 bytes @ 0x4
+   267                           
+   268                           
+   269                           ; 2 bytes @ 0x4
+   270  0074                     	ds	1
+   271  0075                     CommandGetAn@channel:	
+   272                           
+   273                           ; 1 bytes @ 0x5
+   274  0075                     	ds	3
+   275  0078                     ??_CommandGetTemp:	
+   276  0078                     CommandGetTemp@temp:	
+   277                           ; 0 bytes @ 0x8
+   278                           
+   279                           
+   280                           ; 4 bytes @ 0x8
+   281  0078                     	ds	4
+   282  007C                     ??_StartSystem:	
+   283                           
+   284                           ; 0 bytes @ 0xC
+   285  007C                     	ds	1
+   286  007D                     ??_main:	
+   287                           
+   288                           	psect	cstackBANK0
+   289  0020                     __pcstackBANK0:	
+   290                           ; 0 bytes @ 0xD
+   291                           
+   292  0020                     ReadDataSPI@data:	
+   293                           
+   294                           ; 4 bytes @ 0x0
+   295  0020                     	ds	4
+   296  0024                     ReadDataSPI@i:	
+   297                           
+   298                           ; 4 bytes @ 0x4
+   299  0024                     	ds	4
+   300  0028                     ?_CommandGetTemp:	
+   301                           
+   302                           ; 4 bytes @ 0x8
+   303  0028                     	ds	4
+   304  002C                     StartSystem@j:	
+   305                           
+   306                           ; 1 bytes @ 0xC
+   307  002C                     	ds	1
+   308  002D                     StartSystem@rw:	
+   309                           
+   310                           ; 1 bytes @ 0xD
+   311  002D                     	ds	1
+   312  002E                     StartSystem@adc:	
+   313                           
+   314                           ; 2 bytes @ 0xE
+   315  002E                     	ds	2
+   316  0030                     StartSystem@address:	
+   317                           
+   318                           ; 1 bytes @ 0x10
+   319  0030                     	ds	1
+   320  0031                     StartSystem@command:	
+   321                           
+   322                           ; 1 bytes @ 0x11
+   323  0031                     	ds	1
+   324  0032                     StartSystem@i:	
+   325                           
+   326                           ; 1 bytes @ 0x12
+   327  0032                     	ds	1
+   328  0033                     StartSystem@temp_data:	
+   329                           
+   330                           ; 1 bytes @ 0x13
+   331  0033                     	ds	1
+   332  0034                     StartSystem@tc:	
+   333                           
+   334                           ; 4 bytes @ 0x14
+   335  0034                     	ds	4
+   336  0038                     StartSystem@data:	
+   337                           
+   338                           ; 1 bytes @ 0x18
+   339  0038                     	ds	1
+   340                           
+   341                           	psect	maintext
+   342  03BD                     __pmaintext:	
+   343 ;;Data sizes: Strings 0, constant 0, data 0, bss 5, persistent 0 stack 0
+   344 ;;Auto spaces:   Size  Autos    Used
+   345 ;; COMMON          14     13      13
+   346 ;; BANK0           80     25      30
+   347 ;; BANK1           32      0       0
+   348 ;;
+   349 ;; Pointer list with targets:
+   350 ;; ?_ReadDataSPI	unsigned long  size(1) Largest target is 0
+   351 ;;
+   352 ;; ?_CommandGetAn	unsigned int  size(1) Largest target is 0
+   353 ;;
+   354 ;; ?_CommandGetTemp	unsigned long  size(1) Largest target is 0
+   355 ;;
+   356 ;; ?_ReadFlash	unsigned int  size(1) Largest target is 0
+   357 ;;
+   358 ;;
+   359 ;; Critical Paths under _main in COMMON
+   360 ;;
+   361 ;;   _main->_StartSystem
+   362 ;;   _StartSystem->_CommandGetTemp
+   363 ;;   _CommandSetAddress->_WriteFlash
+   364 ;;   _InitApp->_CommandSetLat
+   365 ;;   _InitApp->_CommandSetTris
+   366 ;;   _InitApp->_CommandSetPullUps
+   367 ;;   _CommandGetTemp->_ReadDataSPI
+   368 ;;   _InitSPI->_DelaySPI
+   369 ;;   _InitAddress->_ReadFlash
+   370 ;;
+   371 ;; Critical Paths under _isr in COMMON
+   372 ;;
+   373 ;;   None.
+   374 ;;
+   375 ;; Critical Paths under _main in BANK0
+   376 ;;
+   377 ;;   _main->_StartSystem
+   378 ;;   _StartSystem->_CommandGetTemp
+   379 ;;   _CommandGetTemp->_ReadDataSPI
+   380 ;;
+   381 ;; Critical Paths under _isr in BANK0
+   382 ;;
+   383 ;;   None.
+   384 ;;
+   385 ;; Critical Paths under _main in BANK1
+   386 ;;
+   387 ;;   None.
+   388 ;;
+   389 ;; Critical Paths under _isr in BANK1
+   390 ;;
+   391 ;;   None.
+   392 ;;
+   393 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   394 ;;
+   395 ;;
+   396 ;;Call Graph Tables:
+   397 ;;
+   398 ;; ---------------------------------------------------------------------------------
+   399 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   400 ;; ---------------------------------------------------------------------------------
+   401 ;; (0) _main                                                 0     0      0    1903
+   402 ;;                _ConfigureOscillator
+   403 ;;                            _InitApp
+   404 ;;                        _InitAddress
+   405 ;;                        _StartSystem
+   406 ;; ---------------------------------------------------------------------------------
+   407 ;; (1) _StartSystem                                         14    14      0    1350
+   408 ;;                                             12 COMMON     1     1      0
+   409 ;;                                             12 BANK0     13    13      0
+   410 ;;                           _StartI2C
+   411 ;;                        _ReadByteI2C
+   412 ;;                     _CommandGetPort
+   413 ;;                  _CommandSetAddress
+   414 ;;                     _CommandSetTris
+   415 ;;                      _CommandSetLat
+   416 ;;                  _CommandSetPullUps
+   417 ;;                       _CommandGetAn
+   418 ;;                     _CommandGetTemp
+   419 ;;                            _StopI2C
+   420 ;; ---------------------------------------------------------------------------------
+   421 ;; (2) _CommandSetAddress                                    1     1      0     179
+   422 ;;                                              4 COMMON     1     1      0
+   423 ;;                         _EraseFlash
+   424 ;;                         _WriteFlash
+   425 ;; ---------------------------------------------------------------------------------
+   426 ;; (1) _InitApp                                              0     0      0     437
+   427 ;;                            _InitSPI
+   428 ;;                      _CommandSetLat
+   429 ;;                     _CommandSetTris
+   430 ;;                  _CommandSetPullUps
+   431 ;; ---------------------------------------------------------------------------------
+   432 ;; (2) _CommandGetTemp                                       8     4      4     117
+   433 ;;                                              8 COMMON     4     4      0
+   434 ;;                                              8 BANK0      4     0      4
+   435 ;;                        _ReadDataSPI
+   436 ;; ---------------------------------------------------------------------------------
+   437 ;; (3) _WriteFlash                                           4     0      4      90
+   438 ;;                                              0 COMMON     4     0      4
+   439 ;;                        _UnlockFlash
+   440 ;; ---------------------------------------------------------------------------------
+   441 ;; (3) _EraseFlash                                           2     0      2      45
+   442 ;;                                              0 COMMON     2     0      2
+   443 ;;                        _UnlockFlash
+   444 ;; ---------------------------------------------------------------------------------
+   445 ;; (2) _InitSPI                                              0     0      0      46
+   446 ;;                           _DelaySPI
+   447 ;; ---------------------------------------------------------------------------------
+   448 ;; (1) _InitAddress                                          2     2      0     116
+   449 ;;                                              4 COMMON     2     2      0
+   450 ;;                          _ReadFlash
+   451 ;; ---------------------------------------------------------------------------------
+   452 ;; (3) _DelaySPI                                             2     2      0      46
+   453 ;;                                              0 COMMON     2     2      0
+   454 ;; ---------------------------------------------------------------------------------
+   455 ;; (2) _StopI2C                                              0     0      0       0
+   456 ;; ---------------------------------------------------------------------------------
+   457 ;; (2) _ReadByteI2C                                          2     2      0      71
+   458 ;;                                              0 COMMON     2     2      0
+   459 ;; ---------------------------------------------------------------------------------
+   460 ;; (2) _StartI2C                                             0     0      0       0
+   461 ;; ---------------------------------------------------------------------------------
+   462 ;; (2) _CommandGetAn                                         6     4      2      91
+   463 ;;                                              0 COMMON     6     4      2
+   464 ;; ---------------------------------------------------------------------------------
+   465 ;; (3) _ReadDataSPI                                         16    12      4      93
+   466 ;;                                              0 COMMON     8     4      4
+   467 ;;                                              0 BANK0      8     8      0
+   468 ;; ---------------------------------------------------------------------------------
+   469 ;; (2) _CommandGetPort                                       2     2      0      36
+   470 ;;                                              0 COMMON     2     2      0
+   471 ;; ---------------------------------------------------------------------------------
+   472 ;; (4) _UnlockFlash                                          0     0      0       0
+   473 ;; ---------------------------------------------------------------------------------
+   474 ;; (2) _ReadFlash                                            4     2      2      71
+   475 ;;                                              0 COMMON     4     2      2
+   476 ;; ---------------------------------------------------------------------------------
+   477 ;; (2) _CommandSetPullUps                                    2     2      0     115
+   478 ;;                                              0 COMMON     2     2      0
+   479 ;; ---------------------------------------------------------------------------------
+   480 ;; (2) _CommandSetTris                                       2     2      0     138
+   481 ;;                                              0 COMMON     2     2      0
+   482 ;; ---------------------------------------------------------------------------------
+   483 ;; (2) _CommandSetLat                                        2     2      0     138
+   484 ;;                                              0 COMMON     2     2      0
+   485 ;; ---------------------------------------------------------------------------------
+   486 ;; (1) _ConfigureOscillator                                  0     0      0       0
+   487 ;; ---------------------------------------------------------------------------------
+   488 ;; Estimated maximum stack depth 4
+   489 ;; ---------------------------------------------------------------------------------
+   490 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   491 ;; ---------------------------------------------------------------------------------
+   492 ;; (5) _isr                                                  0     0      0       0
+   493 ;; ---------------------------------------------------------------------------------
+   494 ;; Estimated maximum stack depth 5
+   495 ;; ---------------------------------------------------------------------------------
+   496 ;; Call Graph Graphs:
+   497 ;; _main (ROOT)
+   498 ;;   _ConfigureOscillator
+   499 ;;   _InitApp
+   500 ;;     _InitSPI
+   501 ;;       _DelaySPI
+   502 ;;     _CommandSetLat
+   503 ;;     _CommandSetTris
+   504 ;;     _CommandSetPullUps
+   505 ;;   _InitAddress
+   506 ;;     _ReadFlash
+   507 ;;   _StartSystem
+   508 ;;     _StartI2C
+   509 ;;     _ReadByteI2C
+   510 ;;     _CommandGetPort
+   511 ;;     _CommandSetAddress
+   512 ;;       _EraseFlash
+   513 ;;         _UnlockFlash
+   514 ;;       _WriteFlash
+   515 ;;         _UnlockFlash
+   516 ;;     _CommandSetTris
+   517 ;;     _CommandSetLat
+   518 ;;     _CommandSetPullUps
+   519 ;;     _CommandGetAn
+   520 ;;     _CommandGetTemp
+   521 ;;       _ReadDataSPI
+   522 ;;     _StopI2C
+   523 ;;
+   524 ;; _isr (ROOT)
+   525 ;;
+   526 ;; Address spaces:
+   527 ;;Name               Size   Autos  Total    Cost      Usage
+   528 ;;BIGRAM              70      0       0       0        0.0%
+   529 ;;NULL                 0      0       0       0        0.0%
+   530 ;;CODE                 0      0       0       0        0.0%
+   531 ;;BITCOMMON            E      0       0       1        0.0%
+   532 ;;BITSFR0              0      0       0       1        0.0%
+   533 ;;SFR0                 0      0       0       1        0.0%
+   534 ;;COMMON               E      D       D       2       92.9%
+   535 ;;BITSFR1              0      0       0       2        0.0%
+   536 ;;SFR1                 0      0       0       2        0.0%
+   537 ;;BITSFR2              0      0       0       3        0.0%
+   538 ;;SFR2                 0      0       0       3        0.0%
+   539 ;;STACK                0      0       4       3        0.0%
+   540 ;;BITSFR3              0      0       0       4        0.0%
+   541 ;;SFR3                 0      0       0       4        0.0%
+   542 ;;ABS                  0      0      2B       4        0.0%
+   543 ;;BITBANK0            50      0       0       5        0.0%
+   544 ;;BITSFR4              0      0       0       5        0.0%
+   545 ;;SFR4                 0      0       0       5        0.0%
+   546 ;;BANK0               50     19      1E       6       37.5%
+   547 ;;BITSFR5              0      0       0       6        0.0%
+   548 ;;SFR5                 0      0       0       6        0.0%
+   549 ;;BITBANK1            20      0       0       7        0.0%
+   550 ;;BITSFR6              0      0       0       7        0.0%
+   551 ;;SFR6                 0      0       0       7        0.0%
+   552 ;;BANK1               20      0       0       8        0.0%
+   553 ;;BITSFR7              0      0       0       8        0.0%
+   554 ;;SFR7                 0      0       0       8        0.0%
+   555 ;;BITSFR8              0      0       0       9        0.0%
+   556 ;;SFR8                 0      0       0       9        0.0%
+   557 ;;DATA                 0      0      2F       9        0.0%
+   558 ;;BITSFR9              0      0       0      10        0.0%
+   559 ;;SFR9                 0      0       0      10        0.0%
+   560 ;;BITSFR10             0      0       0      11        0.0%
+   561 ;;SFR10                0      0       0      11        0.0%
+   562 ;;BITSFR11             0      0       0      12        0.0%
+   563 ;;SFR11                0      0       0      12        0.0%
+   564 ;;BITSFR12             0      0       0      13        0.0%
+   565 ;;SFR12                0      0       0      13        0.0%
+   566 ;;BITSFR13             0      0       0      14        0.0%
+   567 ;;SFR13                0      0       0      14        0.0%
+   568 ;;BITSFR14             0      0       0      15        0.0%
+   569 ;;SFR14                0      0       0      15        0.0%
+   570 ;;BITSFR15             0      0       0      16        0.0%
+   571 ;;SFR15                0      0       0      16        0.0%
+   572 ;;BITSFR16             0      0       0      17        0.0%
+   573 ;;SFR16                0      0       0      17        0.0%
+   574 ;;BITSFR17             0      0       0      18        0.0%
+   575 ;;SFR17                0      0       0      18        0.0%
+   576 ;;BITSFR18             0      0       0      19        0.0%
+   577 ;;SFR18                0      0       0      19        0.0%
+   578 ;;BITSFR19             0      0       0      20        0.0%
+   579 ;;SFR19                0      0       0      20        0.0%
+   580 ;;BITSFR20             0      0       0      21        0.0%
+   581 ;;SFR20                0      0       0      21        0.0%
+   582 ;;BITSFR21             0      0       0      22        0.0%
+   583 ;;SFR21                0      0       0      22        0.0%
+   584 ;;BITSFR22             0      0       0      23        0.0%
+   585 ;;SFR22                0      0       0      23        0.0%
+   586 ;;BITSFR23             0      0       0      24        0.0%
+   587 ;;SFR23                0      0       0      24        0.0%
+   588 ;;BITSFR24             0      0       0      25        0.0%
+   589 ;;SFR24                0      0       0      25        0.0%
+   590 ;;BITSFR25             0      0       0      26        0.0%
+   591 ;;SFR25                0      0       0      26        0.0%
+   592 ;;BITSFR26             0      0       0      27        0.0%
+   593 ;;SFR26                0      0       0      27        0.0%
+   594 ;;BITSFR27             0      0       0      28        0.0%
+   595 ;;SFR27                0      0       0      28        0.0%
+   596 ;;BITSFR28             0      0       0      29        0.0%
+   597 ;;SFR28                0      0       0      29        0.0%
+   598 ;;BITSFR29             0      0       0      30        0.0%
+   599 ;;SFR29                0      0       0      30        0.0%
+   600 ;;BITSFR30             0      0       0      31        0.0%
+   601 ;;SFR30                0      0       0      31        0.0%
+   602 ;;BITSFR31             0      0       0      32        0.0%
+   603 ;;SFR31                0      0       0      32        0.0%
+   604                           
+   605                           
+   606 ;; *************** function _main *****************
+   607 ;; Defined at:
+   608 ;;		line 26 in file "main.c"
+   609 ;; Parameters:    Size  Location     Type
+   610 ;;		None
+   611 ;; Auto vars:     Size  Location     Type
+   612 ;;		None
+   613 ;; Return value:  Size  Location     Type
+   614 ;;		None               void
+   615 ;; Registers used:
+   616 ;;		wreg, fsr0l, fsr0h, fsr1l, fsr1h, status,2, status,0, btemp+1, pclath, cstack
+   617 ;; Tracked objects:
+   618 ;;		On entry : 17F/0
+   619 ;;		On exit  : 1F/0
+   620 ;;		Unchanged: FFE00/0
+   621 ;; Data sizes:     COMMON   BANK0   BANK1
+   622 ;;      Params:         0       0       0
+   623 ;;      Locals:         0       0       0
+   624 ;;      Temps:          0       0       0
+   625 ;;      Totals:         0       0       0
+   626 ;;Total ram usage:        0 bytes
+   627 ;; Hardware stack levels required when called:    5
+   628 ;; This function calls:
+   629 ;;		_ConfigureOscillator
+   630 ;;		_InitApp
+   631 ;;		_InitAddress
+   632 ;;		_StartSystem
+   633 ;; This function is called by:
+   634 ;;		Startup code after reset
+   635 ;; This function uses a non-reentrant model
+   636 ;;
+   637  03BD                     _main:	
+   638                           
+   639                           ;main.c: 28: ConfigureOscillator();
+   640                           
+   641                           ; Regs used in _main: [allreg]
+   642  03BD  23A8               	fcall	_ConfigureOscillator
+   643                           
+   644                           ;main.c: 30: InitApp();
+   645  03BE  22BE               	fcall	_InitApp
+   646                           
+   647                           ;main.c: 32: InitAddress();
+   648  03BF  2338               	fcall	_InitAddress
+   649  03C0                     l12316:	
+   650                           
+   651                           ;main.c: 36: {
+   652                           ;main.c: 37: StartSystem();
+   653  03C0  2008               	fcall	_StartSystem
+   654  03C1  2BC0               	goto	l12316
+   655  03C2                     __end_of_main:	
+   656                           
+   657                           	psect	text503
+   658  0008                     __ptext503:	
+   659 ;; =============== function _main ends ============
+   660                           
+   661                           
+   662 ;; *************** function _StartSystem *****************
+   663 ;; Defined at:
+   664 ;;		line 284 in file "user.c"
+   665 ;; Parameters:    Size  Location     Type
+   666 ;;		None
+   667 ;; Auto vars:     Size  Location     Type
+   668 ;;  tc              4   20[BANK0 ] unsigned long 
+   669 ;;  adc             2   14[BANK0 ] unsigned int 
+   670 ;;  data            1   24[BANK0 ] unsigned char 
+   671 ;;  temp_data       1   19[BANK0 ] unsigned char 
+   672 ;;  i               1   18[BANK0 ] unsigned char 
+   673 ;;  command         1   17[BANK0 ] unsigned char 
+   674 ;;  address         1   16[BANK0 ] unsigned char 
+   675 ;;  rw              1   13[BANK0 ] unsigned char 
+   676 ;;  j               1   12[BANK0 ] unsigned char 
+   677 ;; Return value:  Size  Location     Type
+   678 ;;		None               void
+   679 ;; Registers used:
+   680 ;;		wreg, fsr0l, fsr0h, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+   681 ;; Tracked objects:
+   682 ;;		On entry : 1F/0
+   683 ;;		On exit  : 1F/0
+   684 ;;		Unchanged: FFE00/0
+   685 ;; Data sizes:     COMMON   BANK0   BANK1
+   686 ;;      Params:         0       0       0
+   687 ;;      Locals:         0      13       0
+   688 ;;      Temps:          1       0       0
+   689 ;;      Totals:         1      13       0
+   690 ;;Total ram usage:       14 bytes
+   691 ;; Hardware stack levels used:    1
+   692 ;; Hardware stack levels required when called:    4
+   693 ;; This function calls:
+   694 ;;		_StartI2C
+   695 ;;		_ReadByteI2C
+   696 ;;		_CommandGetPort
+   697 ;;		_CommandSetAddress
+   698 ;;		_CommandSetTris
+   699 ;;		_CommandSetLat
+   700 ;;		_CommandSetPullUps
+   701 ;;		_CommandGetAn
+   702 ;;		_CommandGetTemp
+   703 ;;		_StopI2C
+   704 ;; This function is called by:
+   705 ;;		_main
+   706 ;; This function uses a non-reentrant model
+   707 ;;
+   708  0008                     _StartSystem:	
+   709                           
+   710                           ;user.c: 286: unsigned char command = 0;
+   711                           
+   712                           ; Regs used in _StartSystem: [wreg-status,0+pclath+cstack]
+   713  0008  01B1               	clrf	StartSystem@command
+   714                           
+   715                           ;user.c: 287: unsigned char data = 0;
+   716  0009  01B8               	clrf	StartSystem@data
+   717                           
+   718                           ;user.c: 288: unsigned char rw = 0;
+   719  000A  01AD               	clrf	StartSystem@rw
+   720                           
+   721                           ;user.c: 289: unsigned char temp_data = 0;
+   722  000B  01B3               	clrf	StartSystem@temp_data
+   723                           
+   724                           ;user.c: 290: unsigned char i;
+   725                           ;user.c: 291: unsigned char j = 0;
+   726  000C  01AC               	clrf	StartSystem@j
+   727                           
+   728                           ;user.c: 292: unsigned int adc;
+   729                           ;user.c: 293: unsigned long int tc;
+   730                           ;user.c: 297: StartI2C();
+   731  000D  237F               	fcall	_StartI2C
+   732                           
+   733                           ;user.c: 300: address = ReadByteI2C();
+   734  000E  22DD               	fcall	_ReadByteI2C
+   735  000F  0020               	movlb	0	; select bank0
+   736  0010  00B0               	movwf	StartSystem@address
+   737                           
+   738                           ;user.c: 301: if ((address >> 1) == ADDRESS) {
+   739  0011  00FC               	movwf	??_StartSystem
+   740  0012  36FC               	lsrf	??_StartSystem,f
+   741  0013  087C               	movf	??_StartSystem,w
+   742  0014  063D               	xorwf	_ADDRESS,w
+   743  0015  1D03               	skipz
+   744  0016  292B               	goto	l7835
+   745                           
+   746                           ;user.c: 303: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+   747  0017  0021               	movlb	1	; select bank1
+   748  0018  128E               	bcf	14,5	;volatile
+   749  0019  160E               	bsf	14,4	;volatile
+   750  001A                     l7836:	
+   751  001A  0020               	movlb	0	; select bank0
+   752  001B  1E0E               	btfss	14,4	;volatile
+   753  001C  281A               	goto	l7836
+   754  001D                     l7839:	
+   755  001D  1A0E               	btfsc	14,4	;volatile
+   756  001E  281D               	goto	l7839
+   757  001F  0021               	movlb	1	; select bank1
+   758  0020  168E               	bsf	14,5	;volatile
+   759                           
+   760                           ;user.c: 305: TRISCbits.TRISC4 = 0;
+   761  0021  120E               	bcf	14,4	;volatile
+   762                           
+   763                           ;user.c: 306: rw = address & 0x01;
+   764  0022  0020               	movlb	0	; select bank0
+   765  0023  0830               	movf	StartSystem@address,w
+   766  0024  00AD               	movwf	StartSystem@rw
+   767  0025  3001               	movlw	1
+   768  0026  05AD               	andwf	StartSystem@rw,f
+   769                           
+   770                           ;user.c: 307: if (rw) {
+   771  0027  082D               	movf	StartSystem@rw,w
+   772  0028  1903               	btfsc	3,2
+   773  0029  2868               	goto	l7842
+   774  002A                     l12196:	
+   775                           
+   776                           ;user.c: 309: temp_data = DATA_OUT[j++];
+   777  002A  082C               	movf	StartSystem@j,w
+   778  002B  3E39               	addlw	_DATA_OUT& (0+255)
+   779  002C  0086               	movwf	6
+   780  002D  0187               	clrf	7
+   781  002E  0801               	movf	1,w
+   782  002F  00B3               	movwf	StartSystem@temp_data
+   783  0030  3000               	movlw	0
+   784  0031  0AAC               	incf	StartSystem@j,f
+   785                           
+   786                           ;user.c: 311: TRISCbits.TRISC5 = (temp_data & 0x80) ? 1 : 0;
+   787  0032  1BB3               	btfsc	StartSystem@temp_data,7
+   788  0033  3001               	movlw	1
+   789  0034  00FC               	movwf	??_StartSystem
+   790  0035  0EFC               	swapf	??_StartSystem,f
+   791  0036  0DFC               	rlf	??_StartSystem,f
+   792  0037  0021               	movlb	1	; select bank1
+   793  0038  080E               	movf	14,w	;volatile
+   794  0039  067C               	xorwf	??_StartSystem,w
+   795  003A  39DF               	andlw	-33
+   796  003B  067C               	xorwf	??_StartSystem,w
+   797  003C  008E               	movwf	14	;volatile
+   798                           
+   799                           ;user.c: 312: temp_data <<= 1;
+   800  003D  0020               	movlb	0	; select bank0
+   801  003E  35B3               	lslf	StartSystem@temp_data,f
+   802                           
+   803                           ;user.c: 313: TRISCbits.TRISC4 = 1;
+   804  003F  0021               	movlb	1	; select bank1
+   805  0040  160E               	bsf	14,4	;volatile
+   806                           
+   807                           ;user.c: 314: for (i = 0; i < 7; i++) {
+   808  0041  0020               	movlb	0	; select bank0
+   809  0042  01B2               	clrf	StartSystem@i
+   810  0043                     l7846:	
+   811  0043  1E0E               	btfss	14,4	;volatile
+   812  0044  2843               	goto	l7846
+   813  0045                     l7849:	
+   814  0045  1A0E               	btfsc	14,4	;volatile
+   815  0046  2845               	goto	l7849
+   816                           
+   817                           ;user.c: 317: TRISCbits.TRISC5 = (temp_data & 0x80) ? 1 : 0;
+   818  0047  3000               	movlw	0
+   819  0048  1BB3               	btfsc	StartSystem@temp_data,7
+   820  0049  3001               	movlw	1
+   821  004A  00FC               	movwf	??_StartSystem
+   822  004B  0EFC               	swapf	??_StartSystem,f
+   823  004C  0DFC               	rlf	??_StartSystem,f
+   824  004D  0021               	movlb	1	; select bank1
+   825  004E  080E               	movf	14,w	;volatile
+   826  004F  067C               	xorwf	??_StartSystem,w
+   827  0050  39DF               	andlw	-33
+   828  0051  067C               	xorwf	??_StartSystem,w
+   829  0052  008E               	movwf	14	;volatile
+   830                           
+   831                           ;user.c: 318: temp_data <<= 1;
+   832  0053  0020               	movlb	0	; select bank0
+   833  0054  3007               	movlw	7
+   834  0055  35B3               	lslf	StartSystem@temp_data,f
+   835  0056  0AB2               	incf	StartSystem@i,f
+   836  0057  0232               	subwf	StartSystem@i,w
+   837  0058  1C03               	skipc
+   838  0059  2843               	goto	l7846
+   839  005A                     l7852:	
+   840  005A  1E0E               	btfss	14,4	;volatile
+   841  005B  285A               	goto	l7852
+   842  005C                     l7855:	
+   843  005C  1A0E               	btfsc	14,4	;volatile
+   844  005D  285C               	goto	l7855
+   845                           
+   846                           ;user.c: 324: TRISCbits.TRISC5 = 1;
+   847  005E  0021               	movlb	1	; select bank1
+   848  005F  168E               	bsf	14,5	;volatile
+   849  0060                     l7858:	
+   850                           ;user.c: 325: while (!PORTCbits.RC4);
+   851                           
+   852  0060  0020               	movlb	0	; select bank0
+   853  0061  1E0E               	btfss	14,4	;volatile
+   854  0062  2860               	goto	l7858
+   855                           
+   856                           ;user.c: 326: if (PORTCbits.RC5)
+   857  0063  1A8E               	btfsc	14,5	;volatile
+   858  0064  2932               	goto	l12308
+   859  0065                     l7863:	
+   860  0065  1E0E               	btfss	14,4	;volatile
+   861  0066  282A               	goto	l12196
+   862  0067  2865               	goto	l7863
+   863  0068                     l7842:	
+   864                           
+   865                           ;user.c: 332: TRISCbits.TRISC4 = 1;
+   866  0068  0021               	movlb	1	; select bank1
+   867  0069  160E               	bsf	14,4	;volatile
+   868                           
+   869                           ;user.c: 333: command = ReadByteI2C();
+   870  006A  22DD               	fcall	_ReadByteI2C
+   871  006B  0020               	movlb	0	; select bank0
+   872  006C  00B1               	movwf	StartSystem@command
+   873                           
+   874                           ;user.c: 334: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+   875  006D  0021               	movlb	1	; select bank1
+   876  006E  128E               	bcf	14,5	;volatile
+   877  006F  160E               	bsf	14,4	;volatile
+   878  0070                     l7868:	
+   879  0070  0020               	movlb	0	; select bank0
+   880  0071  1E0E               	btfss	14,4	;volatile
+   881  0072  2870               	goto	l7868
+   882  0073                     l7871:	
+   883  0073  1A0E               	btfsc	14,4	;volatile
+   884  0074  2873               	goto	l7871
+   885  0075  0021               	movlb	1	; select bank1
+   886  0076  168E               	bsf	14,5	;volatile
+   887                           
+   888                           ;user.c: 335: TRISCbits.TRISC4 = 0;
+   889  0077  120E               	bcf	14,4	;volatile
+   890                           
+   891                           ;user.c: 336: switch (command) {
+   892  0078  2904               	goto	l12306
+   893  0079                     l12226:	
+   894                           
+   895                           ;user.c: 338: DATA_OUT[0] = 0x27;
+   896  0079  3027               	movlw	39
+   897  007A                     L1:	
+   898  007A  00B9               	movwf	_DATA_OUT
+   899  007B                     l12228:	
+   900                           
+   901                           ;user.c: 339: TRISCbits.TRISC4 = 1;
+   902  007B  0021               	movlb	1	; select bank1
+   903  007C  160E               	bsf	14,4	;volatile
+   904                           
+   905                           ;user.c: 340: break;
+   906  007D  2932               	goto	l12308
+   907  007E                     l12230:	
+   908                           
+   909                           ;user.c: 343: DATA_OUT[0] = CommandGetPort();
+   910  007E  229A               	fcall	_CommandGetPort
+   911  007F  287A               	goto	L1
+   912  0080                     l7878:	
+   913                           ;user.c: 347: case 0xF0:
+   914                           
+   915                           
+   916                           ;user.c: 348: TRISCbits.TRISC4 = 1;
+   917  0080  0021               	movlb	1	; select bank1
+   918  0081  160E               	bsf	14,4	;volatile
+   919                           
+   920                           ;user.c: 349: data = ReadByteI2C();
+   921  0082  22DD               	fcall	_ReadByteI2C
+   922  0083  0020               	movlb	0	; select bank0
+   923  0084  00B8               	movwf	StartSystem@data
+   924                           
+   925                           ;user.c: 350: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+   926  0085  0021               	movlb	1	; select bank1
+   927  0086  128E               	bcf	14,5	;volatile
+   928  0087  160E               	bsf	14,4	;volatile
+   929  0088                     l7879:	
+   930  0088  0020               	movlb	0	; select bank0
+   931  0089  1E0E               	btfss	14,4	;volatile
+   932  008A  2888               	goto	l7879
+   933  008B                     l7882:	
+   934  008B  1A0E               	btfsc	14,4	;volatile
+   935  008C  288B               	goto	l7882
+   936  008D  0021               	movlb	1	; select bank1
+   937  008E  168E               	bsf	14,5	;volatile
+   938                           
+   939                           ;user.c: 351: TRISCbits.TRISC4 = 0;
+   940  008F  120E               	bcf	14,4	;volatile
+   941                           
+   942                           ;user.c: 352: CommandSetAddress(data);
+   943  0090  0020               	movlb	0	; select bank0
+   944  0091  0838               	movf	StartSystem@data,w
+   945  0092  2324               	fcall	_CommandSetAddress
+   946  0093  287B               	goto	l12228
+   947  0094                     l7885:	
+   948                           ;user.c: 356: case 0x01:
+   949                           
+   950                           
+   951                           ;user.c: 357: TRISCbits.TRISC4 = 1;
+   952  0094  0021               	movlb	1	; select bank1
+   953  0095  160E               	bsf	14,4	;volatile
+   954                           
+   955                           ;user.c: 358: data = ReadByteI2C();
+   956  0096  22DD               	fcall	_ReadByteI2C
+   957  0097  0020               	movlb	0	; select bank0
+   958  0098  00B8               	movwf	StartSystem@data
+   959                           
+   960                           ;user.c: 359: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+   961  0099  0021               	movlb	1	; select bank1
+   962  009A  128E               	bcf	14,5	;volatile
+   963  009B  160E               	bsf	14,4	;volatile
+   964  009C                     l7886:	
+   965  009C  0020               	movlb	0	; select bank0
+   966  009D  1E0E               	btfss	14,4	;volatile
+   967  009E  289C               	goto	l7886
+   968  009F                     l7889:	
+   969  009F  1A0E               	btfsc	14,4	;volatile
+   970  00A0  289F               	goto	l7889
+   971  00A1  0021               	movlb	1	; select bank1
+   972  00A2  168E               	bsf	14,5	;volatile
+   973                           
+   974                           ;user.c: 360: TRISCbits.TRISC4 = 0;
+   975  00A3  120E               	bcf	14,4	;volatile
+   976                           
+   977                           ;user.c: 361: CommandSetTris(data);
+   978  00A4  0020               	movlb	0	; select bank0
+   979  00A5  0838               	movf	StartSystem@data,w
+   980  00A6  21DE               	fcall	_CommandSetTris
+   981  00A7  287B               	goto	l12228
+   982  00A8                     l7892:	
+   983                           ;user.c: 365: case 0x02:
+   984                           
+   985                           
+   986                           ;user.c: 366: TRISCbits.TRISC4 = 1;
+   987  00A8  0021               	movlb	1	; select bank1
+   988  00A9  160E               	bsf	14,4	;volatile
+   989                           
+   990                           ;user.c: 367: data = ReadByteI2C();
+   991  00AA  22DD               	fcall	_ReadByteI2C
+   992  00AB  0020               	movlb	0	; select bank0
+   993  00AC  00B8               	movwf	StartSystem@data
+   994                           
+   995                           ;user.c: 368: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+   996  00AD  0021               	movlb	1	; select bank1
+   997  00AE  128E               	bcf	14,5	;volatile
+   998  00AF  160E               	bsf	14,4	;volatile
+   999  00B0                     l7893:	
+  1000  00B0  0020               	movlb	0	; select bank0
+  1001  00B1  1E0E               	btfss	14,4	;volatile
+  1002  00B2  28B0               	goto	l7893
+  1003  00B3                     l7896:	
+  1004  00B3  1A0E               	btfsc	14,4	;volatile
+  1005  00B4  28B3               	goto	l7896
+  1006  00B5  0021               	movlb	1	; select bank1
+  1007  00B6  168E               	bsf	14,5	;volatile
+  1008                           
+  1009                           ;user.c: 369: TRISCbits.TRISC4 = 0;
+  1010  00B7  120E               	bcf	14,4	;volatile
+  1011                           
+  1012                           ;user.c: 370: CommandSetLat(data);
+  1013  00B8  0020               	movlb	0	; select bank0
+  1014  00B9  0838               	movf	StartSystem@data,w
+  1015  00BA  2221               	fcall	_CommandSetLat
+  1016  00BB  287B               	goto	l12228
+  1017  00BC                     l7899:	
+  1018                           ;user.c: 374: case 0x04:
+  1019                           
+  1020                           
+  1021                           ;user.c: 375: TRISCbits.TRISC4 = 1;
+  1022  00BC  0021               	movlb	1	; select bank1
+  1023  00BD  160E               	bsf	14,4	;volatile
+  1024                           
+  1025                           ;user.c: 376: data = ReadByteI2C();
+  1026  00BE  22DD               	fcall	_ReadByteI2C
+  1027  00BF  0020               	movlb	0	; select bank0
+  1028  00C0  00B8               	movwf	StartSystem@data
+  1029                           
+  1030                           ;user.c: 377: TRISCbits.TRISC5 = 0; TRISCbits.TRISC4 = 1; while(!PORTCbits.RC4); while(P
+      +                          ORTCbits.RC4); TRISCbits.TRISC5 = 1;;
+  1031  00C1  0021               	movlb	1	; select bank1
+  1032  00C2  128E               	bcf	14,5	;volatile
+  1033  00C3  160E               	bsf	14,4	;volatile
+  1034  00C4                     l7900:	
+  1035  00C4  0020               	movlb	0	; select bank0
+  1036  00C5  1E0E               	btfss	14,4	;volatile
+  1037  00C6  28C4               	goto	l7900
+  1038  00C7                     l7903:	
+  1039  00C7  1A0E               	btfsc	14,4	;volatile
+  1040  00C8  28C7               	goto	l7903
+  1041  00C9  0021               	movlb	1	; select bank1
+  1042  00CA  168E               	bsf	14,5	;volatile
+  1043                           
+  1044                           ;user.c: 378: TRISCbits.TRISC4 = 0;
+  1045  00CB  120E               	bcf	14,4	;volatile
+  1046                           
+  1047                           ;user.c: 379: CommandSetPullUps(data);
+  1048  00CC  0020               	movlb	0	; select bank0
+  1049  00CD  0838               	movf	StartSystem@data,w
+  1050  00CE  2263               	fcall	_CommandSetPullUps
+  1051  00CF  287B               	goto	l12228
+  1052  00D0                     l7909:	
+  1053  00D0                     l12274:	
+  1054                           
+  1055                           ;user.c: 384: case 0x11:
+  1056                           ;user.c: 385: case 0x12:
+  1057                           ;user.c: 386: case 0x16:
+  1058                           ;user.c: 387: case 0x17:
+  1059                           ;user.c: 388: adc = CommandGetAn(command - 0x10);
+  1060  00D0  0831               	movf	StartSystem@command,w
+  1061  00D1  3EF0               	addlw	240
+  1062  00D2  2133               	fcall	_CommandGetAn
+  1063  00D3  0871               	movf	?_CommandGetAn+1,w
+  1064  00D4  0020               	movlb	0	; select bank0
+  1065  00D5  00AF               	movwf	StartSystem@adc+1
+  1066  00D6  0870               	movf	?_CommandGetAn,w
+  1067  00D7  00AE               	movwf	StartSystem@adc
+  1068                           
+  1069                           ;user.c: 389: DATA_OUT[0] = adc & 0xFF;
+  1070  00D8  00B9               	movwf	_DATA_OUT
+  1071                           
+  1072                           ;user.c: 390: DATA_OUT[1] = (adc >> 8) & 0xFF;
+  1073  00D9  082F               	movf	StartSystem@adc+1,w
+  1074  00DA  00BA               	movwf	_DATA_OUT+1
+  1075                           
+  1076                           ;user.c: 391: DATA_OUT[2] = 0xFF;
+  1077  00DB  30FF               	movlw	255
+  1078  00DC  00BB               	movwf	_DATA_OUT+2
+  1079                           
+  1080                           ;user.c: 392: DATA_OUT[3] = 0xFF;
+  1081  00DD  2902               	goto	L2
+  1082  00DE                     l12286:	
+  1083                           
+  1084                           ;user.c: 397: tc = CommandGetTemp();
+  1085  00DE  234C               	fcall	_CommandGetTemp
+  1086  00DF  082B               	movf	?_CommandGetTemp+3,w
+  1087  00E0  00B7               	movwf	StartSystem@tc+3
+  1088  00E1  082A               	movf	?_CommandGetTemp+2,w
+  1089  00E2  00B6               	movwf	StartSystem@tc+2
+  1090  00E3  0829               	movf	?_CommandGetTemp+1,w
+  1091  00E4  00B5               	movwf	StartSystem@tc+1
+  1092  00E5  0828               	movf	?_CommandGetTemp,w
+  1093  00E6  00B4               	movwf	StartSystem@tc
+  1094                           
+  1095                           ;user.c: 398: DATA_OUT[0] = tc & 0xFF;
+  1096  00E7  00B9               	movwf	_DATA_OUT
+  1097                           
+  1098                           ;user.c: 399: tc >>= 8;
+  1099  00E8  0835               	movf	StartSystem@tc+1,w
+  1100  00E9  00B4               	movwf	StartSystem@tc
+  1101  00EA  0836               	movf	StartSystem@tc+2,w
+  1102  00EB  00B5               	movwf	StartSystem@tc+1
+  1103  00EC  0837               	movf	StartSystem@tc+3,w
+  1104  00ED  00B6               	movwf	StartSystem@tc+2
+  1105  00EE  01B7               	clrf	StartSystem@tc+3
+  1106                           
+  1107                           ;user.c: 400: DATA_OUT[1] = tc & 0xFF;
+  1108  00EF  0834               	movf	StartSystem@tc,w
+  1109  00F0  00BA               	movwf	_DATA_OUT+1
+  1110                           
+  1111                           ;user.c: 401: tc >>= 8;
+  1112  00F1  0835               	movf	StartSystem@tc+1,w
+  1113  00F2  00B4               	movwf	StartSystem@tc
+  1114  00F3  0836               	movf	StartSystem@tc+2,w
+  1115  00F4  00B5               	movwf	StartSystem@tc+1
+  1116  00F5  0837               	movf	StartSystem@tc+3,w
+  1117  00F6  00B6               	movwf	StartSystem@tc+2
+  1118  00F7  01B7               	clrf	StartSystem@tc+3
+  1119                           
+  1120                           ;user.c: 402: DATA_OUT[2] = tc & 0xFF;
+  1121  00F8  0834               	movf	StartSystem@tc,w
+  1122  00F9  00BB               	movwf	_DATA_OUT+2
+  1123                           
+  1124                           ;user.c: 403: tc >>= 8;
+  1125  00FA  0835               	movf	StartSystem@tc+1,w
+  1126  00FB  00B4               	movwf	StartSystem@tc
+  1127  00FC  0836               	movf	StartSystem@tc+2,w
+  1128  00FD  00B5               	movwf	StartSystem@tc+1
+  1129  00FE  0837               	movf	StartSystem@tc+3,w
+  1130  00FF  00B6               	movwf	StartSystem@tc+2
+  1131  0100  01B7               	clrf	StartSystem@tc+3
+  1132                           
+  1133                           ;user.c: 404: DATA_OUT[3] = tc & 0xFF;
+  1134  0101  0834               	movf	StartSystem@tc,w
+  1135  0102                     L2:	
+  1136  0102  00BC               	movwf	_DATA_OUT+3
+  1137  0103  287B               	goto	l12228
+  1138  0104                     l12306:	
+  1139  0104  0020               	movlb	0	; select bank0
+  1140  0105  0831               	movf	StartSystem@command,w
+  1141                           
+  1142                           ; Switch size 1, requested type "speed"
+  1143                           ; Number of cases is 12, Range of values is 1 to 240
+  1144                           ; switch strategies available:
+  1145                           ; Name         Instructions Cycles
+  1146                           ; simple_byte           37    19 (average)
+  1147                           ; jumptable            263     9 (fixed)
+  1148                           ;	Chosen strategy is simple_byte
+  1149  0106  3A01               	xorlw	1	; case 1
+  1150  0107  1903               	skipnz
+  1151  0108  2894               	goto	l7885
+  1152  0109  3A03               	xorlw	3	; case 2
+  1153  010A  1903               	skipnz
+  1154  010B  28A8               	goto	l7892
+  1155  010C  3A01               	xorlw	1	; case 3
+  1156  010D  1903               	skipnz
+  1157  010E  287E               	goto	l12230
+  1158  010F  3A07               	xorlw	7	; case 4
+  1159  0110  1903               	skipnz
+  1160  0111  28BC               	goto	l7899
+  1161  0112  3A14               	xorlw	20	; case 16
+  1162  0113  1903               	skipnz
+  1163  0114  28D0               	goto	l7909
+  1164  0115  3A01               	xorlw	1	; case 17
+  1165  0116  1903               	skipnz
+  1166  0117  28D0               	goto	l12274
+  1167  0118  3A03               	xorlw	3	; case 18
+  1168  0119  1903               	skipnz
+  1169  011A  28D0               	goto	l12274
+  1170  011B  3A04               	xorlw	4	; case 22
+  1171  011C  1903               	skipnz
+  1172  011D  28D0               	goto	l12274
+  1173  011E  3A01               	xorlw	1	; case 23
+  1174  011F  1903               	skipnz
+  1175  0120  28D0               	goto	l12274
+  1176  0121  3A37               	xorlw	55	; case 32
+  1177  0122  1903               	skipnz
+  1178  0123  2879               	goto	l12226
+  1179  0124  3A01               	xorlw	1	; case 33
+  1180  0125  1903               	skipnz
+  1181  0126  28DE               	goto	l12286
+  1182  0127  3AD1               	xorlw	209	; case 240
+  1183  0128  1903               	skipnz
+  1184  0129  2880               	goto	l7878
+  1185  012A  287B               	goto	l12228
+  1186  012B                     l7835:	
+  1187                           
+  1188                           ;user.c: 417: TRISCbits.TRISC4 = 1;
+  1189  012B  0021               	movlb	1	; select bank1
+  1190  012C  160E               	bsf	14,4	;volatile
+  1191  012D                     l7914:	
+  1192                           ;user.c: 418: while(!PORTCbits.RC4); while(PORTCbits.RC4);;
+  1193                           
+  1194  012D  0020               	movlb	0	; select bank0
+  1195  012E  1E0E               	btfss	14,4	;volatile
+  1196  012F  292D               	goto	l7914
+  1197  0130                     l7917:	
+  1198  0130  1A0E               	btfsc	14,4	;volatile
+  1199  0131  2930               	goto	l7917
+  1200  0132                     l12308:	
+  1201                           
+  1202                           ;user.c: 419: }
+  1203                           ;user.c: 421: StopI2C();
+  1204  0132  2BB7               	ljmp	l9483
+  1205  0133                     __end_of_StartSystem:	
+  1206                           
+  1207                           	psect	text504
+  1208  0324                     __ptext504:	
+  1209 ;; =============== function _StartSystem ends ============
+  1210                           
+  1211                           
+  1212 ;; *************** function _CommandSetAddress *****************
+  1213 ;; Defined at:
+  1214 ;;		line 203 in file "user.c"
+  1215 ;; Parameters:    Size  Location     Type
+  1216 ;;  data            1    wreg     unsigned char 
+  1217 ;; Auto vars:     Size  Location     Type
+  1218 ;;  data            1    4[COMMON] unsigned char 
+  1219 ;; Return value:  Size  Location     Type
+  1220 ;;		None               void
+  1221 ;; Registers used:
+  1222 ;;		wreg, status,2, status,0, pclath, cstack
+  1223 ;; Tracked objects:
+  1224 ;;		On entry : 1F/0
+  1225 ;;		On exit  : 1F/0
+  1226 ;;		Unchanged: FFE00/0
+  1227 ;; Data sizes:     COMMON   BANK0   BANK1
+  1228 ;;      Params:         0       0       0
+  1229 ;;      Locals:         1       0       0
+  1230 ;;      Temps:          0       0       0
+  1231 ;;      Totals:         1       0       0
+  1232 ;;Total ram usage:        1 bytes
+  1233 ;; Hardware stack levels used:    1
+  1234 ;; Hardware stack levels required when called:    3
+  1235 ;; This function calls:
+  1236 ;;		_EraseFlash
+  1237 ;;		_WriteFlash
+  1238 ;; This function is called by:
+  1239 ;;		_StartSystem
+  1240 ;; This function uses a non-reentrant model
+  1241 ;;
+  1242  0324                     _CommandSetAddress:	
+  1243                           
+  1244                           ; Regs used in _CommandSetAddress: [wreg+status,2+status,0+pclath+cstack]
+  1245                           ;CommandSetAddress@data stored from wreg
+  1246  0324  00F4               	movwf	CommandSetAddress@data
+  1247                           
+  1248                           ;user.c: 204: if (!PORTAbits.RA5) {
+  1249  0325  1A8C               	btfsc	12,5	;volatile
+  1250  0326  0008               	return
+  1251                           
+  1252                           ;user.c: 206: EraseFlash(0x7FF);
+  1253  0327  30FF               	movlw	255
+  1254  0328  00F0               	movwf	?_EraseFlash
+  1255  0329  3007               	movlw	7
+  1256  032A  00F1               	movwf	?_EraseFlash+1
+  1257  032B  236F               	fcall	_EraseFlash
+  1258                           
+  1259                           ;user.c: 207: WriteFlash(data, 0x7FF);
+  1260  032C  0874               	movf	CommandSetAddress@data,w
+  1261  032D  00F0               	movwf	?_WriteFlash
+  1262  032E  30FF               	movlw	255
+  1263  032F  01F1               	clrf	?_WriteFlash+1
+  1264  0330  00F2               	movwf	?_WriteFlash+2
+  1265  0331  3007               	movlw	7
+  1266  0332  00F3               	movwf	?_WriteFlash+3
+  1267  0333  230D               	fcall	_WriteFlash
+  1268                           
+  1269                           ;user.c: 208: ADDRESS = data;
+  1270  0334  0874               	movf	CommandSetAddress@data,w
+  1271  0335  0020               	movlb	0	; select bank0
+  1272  0336  00BD               	movwf	_ADDRESS
+  1273  0337  0008               	return
+  1274  0338                     __end_of_CommandSetAddress:	
+  1275                           
+  1276                           	psect	text505
+  1277  02BE                     __ptext505:	
+  1278 ;; =============== function _CommandSetAddress ends ============
+  1279                           
+  1280                           
+  1281 ;; *************** function _InitApp *****************
+  1282 ;; Defined at:
+  1283 ;;		line 21 in file "user.c"
+  1284 ;; Parameters:    Size  Location     Type
+  1285 ;;		None
+  1286 ;; Auto vars:     Size  Location     Type
+  1287 ;;		None
+  1288 ;; Return value:  Size  Location     Type
+  1289 ;;		None               void
+  1290 ;; Registers used:
+  1291 ;;		wreg, status,2, status,0, btemp+1, pclath, cstack
+  1292 ;; Tracked objects:
+  1293 ;;		On entry : 17F/1
+  1294 ;;		On exit  : 1F/4
+  1295 ;;		Unchanged: FFE00/0
+  1296 ;; Data sizes:     COMMON   BANK0   BANK1
+  1297 ;;      Params:         0       0       0
+  1298 ;;      Locals:         0       0       0
+  1299 ;;      Temps:          0       0       0
+  1300 ;;      Totals:         0       0       0
+  1301 ;;Total ram usage:        0 bytes
+  1302 ;; Hardware stack levels used:    1
+  1303 ;; Hardware stack levels required when called:    3
+  1304 ;; This function calls:
+  1305 ;;		_InitSPI
+  1306 ;;		_CommandSetLat
+  1307 ;;		_CommandSetTris
+  1308 ;;		_CommandSetPullUps
+  1309 ;; This function is called by:
+  1310 ;;		_main
+  1311 ;; This function uses a non-reentrant model
+  1312 ;;
+  1313  02BE                     _InitApp:	
+  1314                           
+  1315                           ;user.c: 25: ANSELC = 0x00;
+  1316                           
+  1317                           ; Regs used in _InitApp: [wreg+status,2+status,0+btemp+1+pclath+cstack]
+  1318  02BE  0023               	movlb	3	; select bank3
+  1319  02BF  018E               	clrf	14	;volatile
+  1320                           
+  1321                           ;user.c: 26: ANSELA = 0x00;
+  1322  02C0  018C               	clrf	12	;volatile
+  1323                           
+  1324                           ;user.c: 28: TRISCbits.TRISC4 = 1;
+  1325  02C1  0021               	movlb	1	; select bank1
+  1326  02C2  160E               	bsf	14,4	;volatile
+  1327                           
+  1328                           ;user.c: 29: TRISCbits.TRISC5 = 1;
+  1329  02C3  168E               	bsf	14,5	;volatile
+  1330                           
+  1331                           ;user.c: 30: LATCbits.LATC4 = 0;
+  1332  02C4  0022               	movlb	2	; select bank2
+  1333  02C5  120E               	bcf	14,4	;volatile
+  1334                           
+  1335                           ;user.c: 31: LATCbits.LATC5 = 0;
+  1336  02C6  128E               	bcf	14,5	;volatile
+  1337                           
+  1338                           ;user.c: 33: InitSPI();
+  1339  02C7  2388               	fcall	_InitSPI
+  1340                           
+  1341                           ;user.c: 35: TRISAbits.TRISA5 = 1;
+  1342  02C8  0021               	movlb	1	; select bank1
+  1343  02C9  168C               	bsf	12,5	;volatile
+  1344                           
+  1345                           ;user.c: 36: LATAbits.LATA5 = 0;
+  1346  02CA  0022               	movlb	2	; select bank2
+  1347  02CB  128C               	bcf	12,5	;volatile
+  1348                           
+  1349                           ;user.c: 37: OPTION_REGbits.nWPUEN = 0;
+  1350  02CC  0021               	movlb	1	; select bank1
+  1351  02CD  1395               	bcf	21,7	;volatile
+  1352                           
+  1353                           ;user.c: 38: WPUAbits.WPUA = 0x00;
+  1354  02CE  30C0               	movlw	-64
+  1355  02CF  0024               	movlb	4	; select bank4
+  1356  02D0  058C               	andwf	12,f	;volatile
+  1357                           
+  1358                           ;user.c: 41: DATA_OUT[0] = 0xFF;
+  1359  02D1  30FF               	movlw	255
+  1360  02D2  0020               	movlb	0	; select bank0
+  1361  02D3  00B9               	movwf	_DATA_OUT
+  1362                           
+  1363                           ;user.c: 42: DATA_OUT[1] = 0xFF;
+  1364  02D4  00BA               	movwf	_DATA_OUT+1
+  1365                           
+  1366                           ;user.c: 43: DATA_OUT[2] = 0xFF;
+  1367  02D5  00BB               	movwf	_DATA_OUT+2
+  1368                           
+  1369                           ;user.c: 44: DATA_OUT[3] = 0xFF;
+  1370  02D6  00BC               	movwf	_DATA_OUT+3
+  1371                           
+  1372                           ;user.c: 46: CommandSetLat(0x00);
+  1373  02D7  3000               	movlw	0
+  1374  02D8  2221               	fcall	_CommandSetLat
+  1375                           
+  1376                           ;user.c: 47: CommandSetTris(0xFF);
+  1377  02D9  30FF               	movlw	255
+  1378  02DA  21DE               	fcall	_CommandSetTris
+  1379                           
+  1380                           ;user.c: 48: CommandSetPullUps(0x00);
+  1381  02DB  3000               	movlw	0
+  1382  02DC  2A63               	ljmp	_CommandSetPullUps
+  1383  02DD                     __end_of_InitApp:	
+  1384                           
+  1385                           	psect	text506
+  1386  034C                     __ptext506:	
+  1387 ;; =============== function _InitApp ends ============
+  1388                           
+  1389                           
+  1390 ;; *************** function _CommandGetTemp *****************
+  1391 ;; Defined at:
+  1392 ;;		line 181 in file "user.c"
+  1393 ;; Parameters:    Size  Location     Type
+  1394 ;;		None
+  1395 ;; Auto vars:     Size  Location     Type
+  1396 ;;  temp            4    8[COMMON] unsigned long 
+  1397 ;; Return value:  Size  Location     Type
+  1398 ;;                  4    8[BANK0 ] unsigned long 
+  1399 ;; Registers used:
+  1400 ;;		wreg, status,2, status,0, pclath, cstack
+  1401 ;; Tracked objects:
+  1402 ;;		On entry : 1F/0
+  1403 ;;		On exit  : 1F/0
+  1404 ;;		Unchanged: FFFE0/0
+  1405 ;; Data sizes:     COMMON   BANK0   BANK1
+  1406 ;;      Params:         0       4       0
+  1407 ;;      Locals:         4       0       0
+  1408 ;;      Temps:          0       0       0
+  1409 ;;      Totals:         4       4       0
+  1410 ;;Total ram usage:        8 bytes
+  1411 ;; Hardware stack levels used:    1
+  1412 ;; Hardware stack levels required when called:    2
+  1413 ;; This function calls:
+  1414 ;;		_ReadDataSPI
+  1415 ;; This function is called by:
+  1416 ;;		_StartSystem
+  1417 ;; This function uses a non-reentrant model
+  1418 ;;
+  1419  034C                     _CommandGetTemp:	
+  1420                           
+  1421                           ;user.c: 183: temp = ReadDataSPI();
+  1422                           
+  1423                           ; Regs used in _CommandGetTemp: [wreg+status,2+status,0+pclath+cstack]
+  1424  034C  2191               	fcall	_ReadDataSPI
+  1425  034D  0873               	movf	?_ReadDataSPI+3,w
+  1426  034E  00FB               	movwf	CommandGetTemp@temp+3
+  1427  034F  0872               	movf	?_ReadDataSPI+2,w
+  1428  0350  00FA               	movwf	CommandGetTemp@temp+2
+  1429  0351  0871               	movf	?_ReadDataSPI+1,w
+  1430  0352  00F9               	movwf	CommandGetTemp@temp+1
+  1431  0353  0870               	movf	?_ReadDataSPI,w
+  1432  0354  00F8               	movwf	CommandGetTemp@temp
+  1433                           
+  1434                           ;user.c: 184: return temp;
+  1435  0355  087B               	movf	CommandGetTemp@temp+3,w
+  1436  0356  00AB               	movwf	?_CommandGetTemp+3
+  1437  0357  087A               	movf	CommandGetTemp@temp+2,w
+  1438  0358  00AA               	movwf	?_CommandGetTemp+2
+  1439  0359  0879               	movf	CommandGetTemp@temp+1,w
+  1440  035A  00A9               	movwf	?_CommandGetTemp+1
+  1441  035B  0878               	movf	CommandGetTemp@temp,w
+  1442  035C  00A8               	movwf	?_CommandGetTemp
+  1443  035D  0008               	return
+  1444  035E                     __end_of_CommandGetTemp:	
+  1445                           
+  1446                           	psect	text507
+  1447  030D                     __ptext507:	
+  1448 ;; =============== function _CommandGetTemp ends ============
+  1449                           
+  1450                           
+  1451 ;; *************** function _WriteFlash *****************
+  1452 ;; Defined at:
+  1453 ;;		line 103 in file "user.c"
+  1454 ;; Parameters:    Size  Location     Type
+  1455 ;;  data            2    0[COMMON] unsigned int 
+  1456 ;;  address         2    2[COMMON] unsigned int 
+  1457 ;; Auto vars:     Size  Location     Type
+  1458 ;;		None
+  1459 ;; Return value:  Size  Location     Type
+  1460 ;;		None               void
+  1461 ;; Registers used:
+  1462 ;;		wreg, status,2, status,0, pclath, cstack
+  1463 ;; Tracked objects:
+  1464 ;;		On entry : 1F/3
+  1465 ;;		On exit  : 1F/3
+  1466 ;;		Unchanged: FFE00/0
+  1467 ;; Data sizes:     COMMON   BANK0   BANK1
+  1468 ;;      Params:         4       0       0
+  1469 ;;      Locals:         0       0       0
+  1470 ;;      Temps:          0       0       0
+  1471 ;;      Totals:         4       0       0
+  1472 ;;Total ram usage:        4 bytes
+  1473 ;; Hardware stack levels used:    1
+  1474 ;; Hardware stack levels required when called:    2
+  1475 ;; This function calls:
+  1476 ;;		_UnlockFlash
+  1477 ;; This function is called by:
+  1478 ;;		_CommandSetAddress
+  1479 ;; This function uses a non-reentrant model
+  1480 ;;
+  1481  030D                     _WriteFlash:	
+  1482                           
+  1483                           ;user.c: 104: GIE = 0;
+  1484                           
+  1485                           ; Regs used in _WriteFlash: [wreg+status,2+status,0+pclath+cstack]
+  1486  030D  138B               	bcf	11,7
+  1487                           
+  1488                           ;user.c: 105: PMCON1bits.CFGS = 0;
+  1489  030E  1315               	bcf	21,6	;volatile
+  1490                           
+  1491                           ;user.c: 106: PMADRL = address & 0x00FF;
+  1492  030F  0872               	movf	WriteFlash@address,w
+  1493  0310  0091               	movwf	17	;volatile
+  1494                           
+  1495                           ;user.c: 107: address >>= 8;
+  1496  0311  0873               	movf	WriteFlash@address+1,w
+  1497  0312  00F2               	movwf	WriteFlash@address
+  1498  0313  01F3               	clrf	WriteFlash@address+1
+  1499                           
+  1500                           ;user.c: 108: PMADRH = address & 0x00FF;
+  1501  0314  0092               	movwf	18	;volatile
+  1502                           
+  1503                           ;user.c: 109: PMCON1bits.FREE = 0;
+  1504  0315  1215               	bcf	21,4	;volatile
+  1505                           
+  1506                           ;user.c: 110: PMCON1bits.LWLO = 1;
+  1507  0316  1695               	bsf	21,5	;volatile
+  1508                           
+  1509                           ;user.c: 111: PMCON1bits.WREN = 1;
+  1510  0317  1515               	bsf	21,2	;volatile
+  1511                           
+  1512                           ;user.c: 112: PMDATL = data & 0x00FF;
+  1513  0318  0870               	movf	WriteFlash@data,w
+  1514  0319  0093               	movwf	19	;volatile
+  1515                           
+  1516                           ;user.c: 113: data >>= 8;
+  1517  031A  0871               	movf	WriteFlash@data+1,w
+  1518  031B  00F0               	movwf	WriteFlash@data
+  1519  031C  01F1               	clrf	WriteFlash@data+1
+  1520                           
+  1521                           ;user.c: 114: PMDATH = data & 0x00FF;
+  1522  031D  0094               	movwf	20	;volatile
+  1523                           
+  1524                           ;user.c: 115: PMCON1bits.LWLO = 0;
+  1525  031E  1295               	bcf	21,5	;volatile
+  1526                           
+  1527                           ;user.c: 116: UnlockFlash();
+  1528  031F  23A0               	fcall	_UnlockFlash
+  1529                           
+  1530                           ;user.c: 117: PMCON1bits.WREN = 0;
+  1531  0320  0023               	movlb	3	; select bank3
+  1532  0321  1115               	bcf	21,2	;volatile
+  1533                           
+  1534                           ;user.c: 118: GIE = 1;
+  1535  0322  178B               	bsf	11,7
+  1536  0323  0008               	return
+  1537  0324                     __end_of_WriteFlash:	
+  1538                           
+  1539                           	psect	text508
+  1540  036F                     __ptext508:	
+  1541 ;; =============== function _WriteFlash ends ============
+  1542                           
+  1543                           
+  1544 ;; *************** function _EraseFlash *****************
+  1545 ;; Defined at:
+  1546 ;;		line 80 in file "user.c"
+  1547 ;; Parameters:    Size  Location     Type
+  1548 ;;  address         2    0[COMMON] unsigned int 
+  1549 ;; Auto vars:     Size  Location     Type
+  1550 ;;		None
+  1551 ;; Return value:  Size  Location     Type
+  1552 ;;		None               void
+  1553 ;; Registers used:
+  1554 ;;		wreg, status,2, status,0, pclath, cstack
+  1555 ;; Tracked objects:
+  1556 ;;		On entry : 1F/0
+  1557 ;;		On exit  : 1F/3
+  1558 ;;		Unchanged: FFE00/0
+  1559 ;; Data sizes:     COMMON   BANK0   BANK1
+  1560 ;;      Params:         2       0       0
+  1561 ;;      Locals:         0       0       0
+  1562 ;;      Temps:          0       0       0
+  1563 ;;      Totals:         2       0       0
+  1564 ;;Total ram usage:        2 bytes
+  1565 ;; Hardware stack levels used:    1
+  1566 ;; Hardware stack levels required when called:    2
+  1567 ;; This function calls:
+  1568 ;;		_UnlockFlash
+  1569 ;; This function is called by:
+  1570 ;;		_CommandSetAddress
+  1571 ;; This function uses a non-reentrant model
+  1572 ;;
+  1573  036F                     _EraseFlash:	
+  1574                           
+  1575                           ;user.c: 81: GIE = 0;
+  1576                           
+  1577                           ; Regs used in _EraseFlash: [wreg+status,2+status,0+pclath+cstack]
+  1578  036F  138B               	bcf	11,7
+  1579                           
+  1580                           ;user.c: 82: PMADRL = address & 0x00FF;
+  1581  0370  0870               	movf	EraseFlash@address,w
+  1582  0371  0023               	movlb	3	; select bank3
+  1583  0372  0091               	movwf	17	;volatile
+  1584                           
+  1585                           ;user.c: 83: address >>= 8;
+  1586  0373  0871               	movf	EraseFlash@address+1,w
+  1587  0374  00F0               	movwf	EraseFlash@address
+  1588  0375  01F1               	clrf	EraseFlash@address+1
+  1589                           
+  1590                           ;user.c: 84: PMADRH = address & 0x00FF;
+  1591  0376  0092               	movwf	18	;volatile
+  1592                           
+  1593                           ;user.c: 85: PMCON1bits.CFGS = 0;
+  1594  0377  1315               	bcf	21,6	;volatile
+  1595                           
+  1596                           ;user.c: 86: PMCON1bits.FREE = 1;
+  1597  0378  1615               	bsf	21,4	;volatile
+  1598                           
+  1599                           ;user.c: 87: PMCON1bits.WREN = 1;
+  1600  0379  1515               	bsf	21,2	;volatile
+  1601                           
+  1602                           ;user.c: 88: UnlockFlash();
+  1603  037A  23A0               	fcall	_UnlockFlash
+  1604                           
+  1605                           ;user.c: 89: PMCON1bits.WREN = 0;
+  1606  037B  0023               	movlb	3	; select bank3
+  1607  037C  1115               	bcf	21,2	;volatile
+  1608                           
+  1609                           ;user.c: 90: GIE = 1;
+  1610  037D  178B               	bsf	11,7
+  1611  037E  0008               	return
+  1612  037F                     __end_of_EraseFlash:	
+  1613                           
+  1614                           	psect	text509
+  1615  0388                     __ptext509:	
+  1616 ;; =============== function _EraseFlash ends ============
+  1617                           
+  1618                           
+  1619 ;; *************** function _InitSPI *****************
+  1620 ;; Defined at:
+  1621 ;;		line 8 in file "MAX31855.c"
+  1622 ;; Parameters:    Size  Location     Type
+  1623 ;;		None
+  1624 ;; Auto vars:     Size  Location     Type
+  1625 ;;		None
+  1626 ;; Return value:  Size  Location     Type
+  1627 ;;		None               void
+  1628 ;; Registers used:
+  1629 ;;		wreg, status,2, status,0, btemp+1, pclath, cstack
+  1630 ;; Tracked objects:
+  1631 ;;		On entry : 17F/2
+  1632 ;;		On exit  : 0/0
+  1633 ;;		Unchanged: FFE00/0
+  1634 ;; Data sizes:     COMMON   BANK0   BANK1
+  1635 ;;      Params:         0       0       0
+  1636 ;;      Locals:         0       0       0
+  1637 ;;      Temps:          0       0       0
+  1638 ;;      Totals:         0       0       0
+  1639 ;;Total ram usage:        0 bytes
+  1640 ;; Hardware stack levels used:    1
+  1641 ;; Hardware stack levels required when called:    2
+  1642 ;; This function calls:
+  1643 ;;		_DelaySPI
+  1644 ;; This function is called by:
+  1645 ;;		_InitApp
+  1646 ;; This function uses a non-reentrant model
+  1647 ;;
+  1648  0388                     _InitSPI:	
+  1649                           
+  1650                           ;MAX31855.c: 9: TRISCbits.TRISC1 = 1;
+  1651                           
+  1652                           ; Regs used in _InitSPI: [wreg+status,2+status,0+btemp+1+pclath+cstack]
+  1653  0388  0021               	movlb	1	; select bank1
+  1654  0389  148E               	bsf	14,1	;volatile
+  1655                           
+  1656                           ;MAX31855.c: 10: TRISCbits.TRISC0 = 0;
+  1657  038A  100E               	bcf	14,0	;volatile
+  1658                           
+  1659                           ;MAX31855.c: 11: TRISAbits.TRISA4 = 0;
+  1660  038B  120C               	bcf	12,4	;volatile
+  1661                           
+  1662                           ;MAX31855.c: 12: LATAbits.LATA4 = 1;
+  1663  038C  0022               	movlb	2	; select bank2
+  1664  038D  160C               	bsf	12,4	;volatile
+  1665                           
+  1666                           ;MAX31855.c: 14: DelaySPI();
+  1667  038E  235E               	fcall	_DelaySPI
+  1668                           
+  1669                           ;MAX31855.c: 15: DelaySPI();
+  1670  038F  2B5E               	ljmp	l12076
+  1671  0390                     __end_of_InitSPI:	
+  1672                           
+  1673                           	psect	text510
+  1674  0338                     __ptext510:	
+  1675 ;; =============== function _InitSPI ends ============
+  1676                           
+  1677                           
+  1678 ;; *************** function _InitAddress *****************
+  1679 ;; Defined at:
+  1680 ;;		line 52 in file "user.c"
+  1681 ;; Parameters:    Size  Location     Type
+  1682 ;;		None
+  1683 ;; Auto vars:     Size  Location     Type
+  1684 ;;  address         2    4[COMMON] unsigned int 
+  1685 ;; Return value:  Size  Location     Type
+  1686 ;;		None               void
+  1687 ;; Registers used:
+  1688 ;;		wreg, status,2, pclath, cstack
+  1689 ;; Tracked objects:
+  1690 ;;		On entry : 1F/4
+  1691 ;;		On exit  : 1F/0
+  1692 ;;		Unchanged: FFE00/0
+  1693 ;; Data sizes:     COMMON   BANK0   BANK1
+  1694 ;;      Params:         0       0       0
+  1695 ;;      Locals:         2       0       0
+  1696 ;;      Temps:          0       0       0
+  1697 ;;      Totals:         2       0       0
+  1698 ;;Total ram usage:        2 bytes
+  1699 ;; Hardware stack levels used:    1
+  1700 ;; Hardware stack levels required when called:    2
+  1701 ;; This function calls:
+  1702 ;;		_ReadFlash
+  1703 ;; This function is called by:
+  1704 ;;		_main
+  1705 ;; This function uses a non-reentrant model
+  1706 ;;
+  1707  0338                     _InitAddress:	
+  1708                           
+  1709                           ;user.c: 53: unsigned int address;
+  1710                           ;user.c: 54: address = ReadFlash(0x7FF);
+  1711                           
+  1712                           ; Regs used in _InitAddress: [wreg+status,2+pclath+cstack]
+  1713  0338  30FF               	movlw	255
+  1714  0339  00F0               	movwf	?_ReadFlash
+  1715  033A  3007               	movlw	7
+  1716  033B  00F1               	movwf	?_ReadFlash+1
+  1717  033C  22F5               	fcall	_ReadFlash
+  1718  033D  0871               	movf	?_ReadFlash+1,w
+  1719  033E  00F5               	movwf	InitAddress@address+1
+  1720  033F  0870               	movf	?_ReadFlash,w
+  1721  0340  00F4               	movwf	InitAddress@address
+  1722                           
+  1723                           ;user.c: 56: if ((address & 0x00FF) == 0xFF)
+  1724  0341  3AFF               	xorlw	255
+  1725  0342  1D03               	skipz
+  1726  0343  2B48               	goto	l12092
+  1727                           
+  1728                           ;user.c: 57: ADDRESS = 0x23;
+  1729  0344  3023               	movlw	35
+  1730  0345  0020               	movlb	0	; select bank0
+  1731  0346  00BD               	movwf	_ADDRESS
+  1732  0347  0008               	return
+  1733  0348                     l12092:	
+  1734                           
+  1735                           ;user.c: 58: else
+  1736                           ;user.c: 59: ADDRESS = address & 0x00FF;
+  1737  0348  0874               	movf	InitAddress@address,w
+  1738  0349  0020               	movlb	0	; select bank0
+  1739  034A  00BD               	movwf	_ADDRESS
+  1740  034B  0008               	return
+  1741  034C                     __end_of_InitAddress:	
+  1742                           
+  1743                           	psect	text511
+  1744  035E                     __ptext511:	
+  1745 ;; =============== function _InitAddress ends ============
+  1746                           
+  1747                           
+  1748 ;; *************** function _DelaySPI *****************
+  1749 ;; Defined at:
+  1750 ;;		line 20 in file "MAX31855.c"
+  1751 ;; Parameters:    Size  Location     Type
+  1752 ;;		None
+  1753 ;; Auto vars:     Size  Location     Type
+  1754 ;;  i               2    0[COMMON] int 
+  1755 ;; Return value:  Size  Location     Type
+  1756 ;;		None               void
+  1757 ;; Registers used:
+  1758 ;;		wreg, status,2, status,0, btemp+1
+  1759 ;; Tracked objects:
+  1760 ;;		On entry : 0/2
+  1761 ;;		On exit  : 0/0
+  1762 ;;		Unchanged: FFE00/0
+  1763 ;; Data sizes:     COMMON   BANK0   BANK1
+  1764 ;;      Params:         0       0       0
+  1765 ;;      Locals:         2       0       0
+  1766 ;;      Temps:          0       0       0
+  1767 ;;      Totals:         2       0       0
+  1768 ;;Total ram usage:        2 bytes
+  1769 ;; Hardware stack levels used:    1
+  1770 ;; Hardware stack levels required when called:    1
+  1771 ;; This function calls:
+  1772 ;;		Nothing
+  1773 ;; This function is called by:
+  1774 ;;		_InitSPI
+  1775 ;; This function uses a non-reentrant model
+  1776 ;;
+  1777  035E                     _DelaySPI:	
+  1778  035E                     l12076:	
+  1779                           ; Regs used in _DelaySPI: [wreg+status,2+status,0+btemp+1]
+  1780                           
+  1781                           
+  1782                           ;MAX31855.c: 21: int i;
+  1783                           ;MAX31855.c: 22: for (i = 0; i < 10; i++);
+  1784  035E  01F0               	clrf	DelaySPI@i
+  1785  035F  01F1               	clrf	DelaySPI@i+1
+  1786  0360                     l12082:	
+  1787  0360  0AF0               	incf	DelaySPI@i,f
+  1788  0361  1903               	skipnz
+  1789  0362  0AF1               	incf	DelaySPI@i+1,f
+  1790  0363  0871               	movf	DelaySPI@i+1,w
+  1791  0364  3A80               	xorlw	128
+  1792  0365  00FF               	movwf	127
+  1793  0366  3080               	movlw	128
+  1794  0367  027F               	subwf	127,w
+  1795  0368  1D03               	skipz
+  1796  0369  2B6C               	goto	u555
+  1797  036A  300A               	movlw	10
+  1798  036B  0270               	subwf	DelaySPI@i,w
+  1799  036C                     u555:	
+  1800  036C  1803               	btfsc	3,0
+  1801  036D  0008               	return
+  1802  036E  2B60               	goto	l12082
+  1803  036F                     __end_of_DelaySPI:	
+  1804                           
+  1805                           	psect	text512
+  1806  03B7                     __ptext512:	
+  1807 ;; =============== function _DelaySPI ends ============
+  1808                           
+  1809                           
+  1810 ;; *************** function _StopI2C *****************
+  1811 ;; Defined at:
+  1812 ;;		line 30 in file "i2c.c"
+  1813 ;; Parameters:    Size  Location     Type
+  1814 ;;		None
+  1815 ;; Auto vars:     Size  Location     Type
+  1816 ;;		None
+  1817 ;; Return value:  Size  Location     Type
+  1818 ;;		None               void
+  1819 ;; Registers used:
+  1820 ;;		None
+  1821 ;; Tracked objects:
+  1822 ;;		On entry : 1E/0
+  1823 ;;		On exit  : 1F/0
+  1824 ;;		Unchanged: FFFE0/0
+  1825 ;; Data sizes:     COMMON   BANK0   BANK1
+  1826 ;;      Params:         0       0       0
+  1827 ;;      Locals:         0       0       0
+  1828 ;;      Temps:          0       0       0
+  1829 ;;      Totals:         0       0       0
+  1830 ;;Total ram usage:        0 bytes
+  1831 ;; Hardware stack levels used:    1
+  1832 ;; Hardware stack levels required when called:    1
+  1833 ;; This function calls:
+  1834 ;;		Nothing
+  1835 ;; This function is called by:
+  1836 ;;		_StartSystem
+  1837 ;; This function uses a non-reentrant model
+  1838 ;;
+  1839  03B7                     _StopI2C:	
+  1840  03B7                     l9483:	
+  1841                           ;i2c.c: 31: while (!PORTCbits.RC5 || !PORTCbits.RC4);
+  1842                           
+  1843                           ; Regs used in _StopI2C: []
+  1844                           
+  1845  03B7  0020               	movlb	0	; select bank0
+  1846  03B8  1E8E               	btfss	14,5	;volatile
+  1847  03B9  2BB7               	goto	l9483
+  1848  03BA  1A0E               	btfsc	14,4	;volatile
+  1849  03BB  0008               	return
+  1850  03BC  2BB7               	goto	l9483
+  1851  03BD                     __end_of_StopI2C:	
+  1852                           
+  1853                           	psect	text513
+  1854  02DD                     __ptext513:	
+  1855 ;; =============== function _StopI2C ends ============
+  1856                           
+  1857                           
+  1858 ;; *************** function _ReadByteI2C *****************
+  1859 ;; Defined at:
+  1860 ;;		line 35 in file "i2c.c"
+  1861 ;; Parameters:    Size  Location     Type
+  1862 ;;		None
+  1863 ;; Auto vars:     Size  Location     Type
+  1864 ;;  i               1    1[COMMON] unsigned char 
+  1865 ;;  data            1    0[COMMON] unsigned char 
+  1866 ;; Return value:  Size  Location     Type
+  1867 ;;                  1    wreg      unsigned char 
+  1868 ;; Registers used:
+  1869 ;;		wreg, status,2, status,0
+  1870 ;; Tracked objects:
+  1871 ;;		On entry : 1E/0
+  1872 ;;		On exit  : 1F/1
+  1873 ;;		Unchanged: FFFE0/0
+  1874 ;; Data sizes:     COMMON   BANK0   BANK1
+  1875 ;;      Params:         0       0       0
+  1876 ;;      Locals:         2       0       0
+  1877 ;;      Temps:          0       0       0
+  1878 ;;      Totals:         2       0       0
+  1879 ;;Total ram usage:        2 bytes
+  1880 ;; Hardware stack levels used:    1
+  1881 ;; Hardware stack levels required when called:    1
+  1882 ;; This function calls:
+  1883 ;;		Nothing
+  1884 ;; This function is called by:
+  1885 ;;		_StartSystem
+  1886 ;; This function uses a non-reentrant model
+  1887 ;;
+  1888  02DD                     _ReadByteI2C:	
+  1889  02DD  3008               	movlw	8
+  1890                           
+  1891                           ;i2c.c: 36: unsigned char data, i;
+  1892                           ;i2c.c: 37: data = 0;
+  1893                           
+  1894                           ; Regs used in _ReadByteI2C: [wreg+status,2+status,0]
+  1895  02DE  01F0               	clrf	ReadByteI2C@data
+  1896                           
+  1897                           ;i2c.c: 39: for (i = 8; i; i--) {
+  1898  02DF  00F1               	movwf	ReadByteI2C@i
+  1899  02E0                     l9489:	
+  1900  02E0  08F1               	movf	ReadByteI2C@i,f
+  1901  02E1  1903               	btfsc	3,2
+  1902  02E2  2AF1               	goto	l9498
+  1903  02E3                     l9491:	
+  1904  02E3  0020               	movlb	0	; select bank0
+  1905  02E4  1E0E               	btfss	14,4	;volatile
+  1906  02E5  2AE3               	goto	l9491
+  1907                           
+  1908                           ;i2c.c: 41: data |= PORTCbits.RC5 & 0x01;
+  1909  02E6  0E0E               	swapf	14,w	;volatile
+  1910  02E7  0C89               	rrf	9,f
+  1911  02E8  3901               	andlw	1
+  1912  02E9  04F0               	iorwf	ReadByteI2C@data,f
+  1913                           
+  1914                           ;i2c.c: 42: if (i != 1)
+  1915  02EA  0371               	decf	ReadByteI2C@i,w
+  1916  02EB  1D03               	btfss	3,2
+  1917                           
+  1918                           ;i2c.c: 43: data <<= 1;
+  1919  02EC  35F0               	lslf	ReadByteI2C@data,f
+  1920  02ED                     l9495:	
+  1921  02ED  1A0E               	btfsc	14,4	;volatile
+  1922  02EE  2AED               	goto	l9495
+  1923  02EF  03F1               	decf	ReadByteI2C@i,f
+  1924  02F0  2AE0               	goto	l9489
+  1925  02F1                     l9498:	
+  1926                           
+  1927                           ;i2c.c: 47: }
+  1928                           ;i2c.c: 48: TRISCbits.TRISC4 = 0;
+  1929  02F1  0021               	movlb	1	; select bank1
+  1930  02F2  120E               	bcf	14,4	;volatile
+  1931                           
+  1932                           ;i2c.c: 49: return data;
+  1933  02F3  0870               	movf	ReadByteI2C@data,w
+  1934  02F4  0008               	return
+  1935  02F5                     __end_of_ReadByteI2C:	
+  1936                           
+  1937                           	psect	text514
+  1938  037F                     __ptext514:	
+  1939 ;; =============== function _ReadByteI2C ends ============
+  1940                           
+  1941                           
+  1942 ;; *************** function _StartI2C *****************
+  1943 ;; Defined at:
+  1944 ;;		line 19 in file "i2c.c"
+  1945 ;; Parameters:    Size  Location     Type
+  1946 ;;		None
+  1947 ;; Auto vars:     Size  Location     Type
+  1948 ;;		None
+  1949 ;; Return value:  Size  Location     Type
+  1950 ;;		None               void
+  1951 ;; Registers used:
+  1952 ;;		None
+  1953 ;; Tracked objects:
+  1954 ;;		On entry : 1F/0
+  1955 ;;		On exit  : 1F/0
+  1956 ;;		Unchanged: FFFE0/0
+  1957 ;; Data sizes:     COMMON   BANK0   BANK1
+  1958 ;;      Params:         0       0       0
+  1959 ;;      Locals:         0       0       0
+  1960 ;;      Temps:          0       0       0
+  1961 ;;      Totals:         0       0       0
+  1962 ;;Total ram usage:        0 bytes
+  1963 ;; Hardware stack levels used:    1
+  1964 ;; Hardware stack levels required when called:    1
+  1965 ;; This function calls:
+  1966 ;;		Nothing
+  1967 ;; This function is called by:
+  1968 ;;		_StartSystem
+  1969 ;; This function uses a non-reentrant model
+  1970 ;;
+  1971  037F                     _StartI2C:	
+  1972  037F                     l9468:	
+  1973                           ;i2c.c: 21: while (!PORTCbits.RC5);
+  1974                           
+  1975                           ; Regs used in _StartI2C: []
+  1976                           ;i2c.c: 20: while (1) {
+  1977                           
+  1978  037F  1E8E               	btfss	14,5	;volatile
+  1979  0380  2B7F               	goto	l9468
+  1980  0381                     l9471:	
+  1981  0381  1A8E               	btfsc	14,5	;volatile
+  1982  0382  2B81               	goto	l9471
+  1983                           
+  1984                           ;i2c.c: 23: if (PORTCbits.RC4)
+  1985  0383  1E0E               	btfss	14,4	;volatile
+  1986  0384  2B7F               	goto	l9468
+  1987  0385                     l9477:	
+  1988  0385  1E0E               	btfss	14,4	;volatile
+  1989  0386  0008               	return
+  1990  0387  2B85               	goto	l9477
+  1991  0388                     __end_of_StartI2C:	
+  1992                           
+  1993                           	psect	text515
+  1994  0133                     __ptext515:	
+  1995 ;; =============== function _StartI2C ends ============
+  1996                           
+  1997                           
+  1998 ;; *************** function _CommandGetAn *****************
+  1999 ;; Defined at:
+  2000 ;;		line 213 in file "user.c"
+  2001 ;; Parameters:    Size  Location     Type
+  2002 ;;  channel         1    wreg     unsigned char 
+  2003 ;; Auto vars:     Size  Location     Type
+  2004 ;;  channel         1    5[COMMON] unsigned char 
+  2005 ;;  data            2    3[COMMON] unsigned int 
+  2006 ;; Return value:  Size  Location     Type
+  2007 ;;                  2    0[COMMON] unsigned int 
+  2008 ;; Registers used:
+  2009 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+  2010 ;; Tracked objects:
+  2011 ;;		On entry : 1F/0
+  2012 ;;		On exit  : 1D/1
+  2013 ;;		Unchanged: FFFE0/0
+  2014 ;; Data sizes:     COMMON   BANK0   BANK1
+  2015 ;;      Params:         2       0       0
+  2016 ;;      Locals:         3       0       0
+  2017 ;;      Temps:          1       0       0
+  2018 ;;      Totals:         6       0       0
+  2019 ;;Total ram usage:        6 bytes
+  2020 ;; Hardware stack levels used:    1
+  2021 ;; Hardware stack levels required when called:    1
+  2022 ;; This function calls:
+  2023 ;;		Nothing
+  2024 ;; This function is called by:
+  2025 ;;		_StartSystem
+  2026 ;; This function uses a non-reentrant model
+  2027 ;;
+  2028  0133                     _CommandGetAn:	
+  2029                           
+  2030                           ; Regs used in _CommandGetAn: [wreg-fsr0h+status,2+status,0]
+  2031                           ;CommandGetAn@channel stored from wreg
+  2032  0133  00F5               	movwf	CommandGetAn@channel
+  2033                           
+  2034                           ;user.c: 214: unsigned int data;
+  2035                           ;user.c: 218: switch (channel) {
+  2036  0134  294E               	goto	l12028
+  2037  0135                     l7814:	
+  2038                           ;user.c: 219: case 0:
+  2039                           
+  2040                           
+  2041                           ;user.c: 220: TRISAbits.TRISA0 = 1;
+  2042  0135  0021               	movlb	1	; select bank1
+  2043  0136  140C               	bsf	12,0	;volatile
+  2044                           
+  2045                           ;user.c: 221: ANSELAbits.ANSA0 = 1;
+  2046  0137  0023               	movlb	3	; select bank3
+  2047  0138  140C               	bsf	12,0	;volatile
+  2048                           
+  2049                           ;user.c: 222: break;
+  2050  0139  2958               	goto	l7815
+  2051  013A                     l7816:	
+  2052                           ;user.c: 223: case 1:
+  2053                           
+  2054                           
+  2055                           ;user.c: 224: TRISAbits.TRISA1 = 1;
+  2056  013A  0021               	movlb	1	; select bank1
+  2057  013B  148C               	bsf	12,1	;volatile
+  2058                           
+  2059                           ;user.c: 225: ANSELAbits.ANSA1 = 1;
+  2060  013C  0023               	movlb	3	; select bank3
+  2061  013D  148C               	bsf	12,1	;volatile
+  2062                           
+  2063                           ;user.c: 226: break;
+  2064  013E  2958               	goto	l7815
+  2065  013F                     l7817:	
+  2066                           ;user.c: 227: case 2:
+  2067                           
+  2068                           
+  2069                           ;user.c: 228: TRISAbits.TRISA2 = 1;
+  2070  013F  0021               	movlb	1	; select bank1
+  2071  0140  150C               	bsf	12,2	;volatile
+  2072                           
+  2073                           ;user.c: 229: ANSELAbits.ANSA2 = 1;
+  2074  0141  0023               	movlb	3	; select bank3
+  2075  0142  150C               	bsf	12,2	;volatile
+  2076                           
+  2077                           ;user.c: 230: break;
+  2078  0143  2958               	goto	l7815
+  2079  0144                     l7818:	
+  2080                           ;user.c: 231: case 6:
+  2081                           
+  2082                           
+  2083                           ;user.c: 232: TRISCbits.TRISC2 = 1;
+  2084  0144  0021               	movlb	1	; select bank1
+  2085  0145  150E               	bsf	14,2	;volatile
+  2086                           
+  2087                           ;user.c: 233: ANSELCbits.ANSC2 = 1;
+  2088  0146  0023               	movlb	3	; select bank3
+  2089  0147  150E               	bsf	14,2	;volatile
+  2090                           
+  2091                           ;user.c: 234: break;
+  2092  0148  2958               	goto	l7815
+  2093  0149                     l7819:	
+  2094                           ;user.c: 236: case 7:
+  2095                           
+  2096                           
+  2097                           ;user.c: 237: TRISCbits.TRISC3 = 1;
+  2098  0149  0021               	movlb	1	; select bank1
+  2099  014A  158E               	bsf	14,3	;volatile
+  2100                           
+  2101                           ;user.c: 238: ANSELCbits.ANSC3 = 1;
+  2102  014B  0023               	movlb	3	; select bank3
+  2103  014C  158E               	bsf	14,3	;volatile
+  2104                           
+  2105                           ;user.c: 239: break;
+  2106  014D  2958               	goto	l7815
+  2107  014E                     l12028:	
+  2108  014E  0875               	movf	CommandGetAn@channel,w
+  2109                           
+  2110                           ; Switch size 1, requested type "speed"
+  2111                           ; Number of cases is 5, Range of values is 0 to 7
+  2112                           ; switch strategies available:
+  2113                           ; Name         Instructions Cycles
+  2114                           ; direct_byte           22     6 (fixed)
+  2115                           ; simple_byte           16     9 (average)
+  2116                           ; jumptable            260     6 (fixed)
+  2117                           ; rangetable            12     4 (fixed)
+  2118                           ; spacedrange           21     6 (fixed)
+  2119                           ; locatedrange           8     3 (fixed)
+  2120                           ;	Chosen strategy is direct_byte
+  2121  014F  0084               	movwf	4
+  2122  0150  3008               	movlw	8
+  2123  0151  0204               	subwf	4,w
+  2124  0152  1803               	skipnc
+  2125  0153  2958               	goto	l7815
+  2126  0154  3183               	movlp	high S12358
+  2127  0155  3090               	movlw	low S12358
+  2128  0156  0704               	addwf	4,w
+  2129  0157  0082               	movwf	2
+  2130  0158                     l7815:	
+  2131                           
+  2132                           ;user.c: 246: ADCON1bits.ADFM = 1;
+  2133  0158  0021               	movlb	1	; select bank1
+  2134  0159  179E               	bsf	30,7	;volatile
+  2135                           
+  2136                           ;user.c: 247: ADCON1bits.ADCS = 0;
+  2137  015A  308F               	movlw	-113
+  2138  015B  059E               	andwf	30,f	;volatile
+  2139                           
+  2140                           ;user.c: 248: ADCON1bits.ADPREF = 0;
+  2141  015C  30FC               	movlw	-4
+  2142  015D  059E               	andwf	30,f	;volatile
+  2143                           
+  2144                           ;user.c: 249: ADCON0bits.CHS = channel;
+  2145  015E  0875               	movf	CommandGetAn@channel,w
+  2146  015F  00F2               	movwf	??_CommandGetAn
+  2147  0160  0DF2               	rlf	??_CommandGetAn,f
+  2148  0161  0DF2               	rlf	??_CommandGetAn,f
+  2149  0162  081D               	movf	29,w	;volatile
+  2150  0163  0672               	xorwf	??_CommandGetAn,w
+  2151  0164  3983               	andlw	-125
+  2152  0165  0672               	xorwf	??_CommandGetAn,w
+  2153  0166  009D               	movwf	29	;volatile
+  2154                           
+  2155                           ;user.c: 250: ADCON0bits.ADON = 1;
+  2156  0167  141D               	bsf	29,0	;volatile
+  2157                           
+  2158                           ;user.c: 252: ADCON0bits.ADGO = 1;
+  2159  0168  149D               	bsf	29,1	;volatile
+  2160  0169                     l7821:	
+  2161                           ;user.c: 253: while (ADCON0bits.ADGO);
+  2162                           
+  2163  0169  189D               	btfsc	29,1	;volatile
+  2164  016A  2969               	goto	l7821
+  2165                           
+  2166                           ;user.c: 255: data = ADRESH;
+  2167  016B  081C               	movf	28,w	;volatile
+  2168  016C  00F3               	movwf	CommandGetAn@data
+  2169  016D  01F4               	clrf	CommandGetAn@data+1
+  2170                           
+  2171                           ;user.c: 256: data << = 8;
+  2172  016E  00F4               	movwf	CommandGetAn@data+1
+  2173  016F  01F3               	clrf	CommandGetAn@data
+  2174                           
+  2175                           ;user.c: 257: data |= ADRESL;
+  2176  0170  081B               	movf	27,w	;volatile
+  2177  0171  04F3               	iorwf	CommandGetAn@data,f
+  2178                           
+  2179                           ;user.c: 259: switch (channel) {
+  2180  0172  2982               	goto	l12040
+  2181  0173                     l7825:	
+  2182                           ;user.c: 260: case 0:
+  2183                           
+  2184                           
+  2185                           ;user.c: 261: ANSELAbits.ANSA0 = 0;
+  2186  0173  0023               	movlb	3	; select bank3
+  2187  0174  100C               	bcf	12,0	;volatile
+  2188                           
+  2189                           ;user.c: 262: break;
+  2190  0175  298C               	goto	l12042
+  2191  0176                     l7827:	
+  2192                           ;user.c: 263: case 1:
+  2193                           
+  2194                           
+  2195                           ;user.c: 264: ANSELAbits.ANSA1 = 0;
+  2196  0176  0023               	movlb	3	; select bank3
+  2197  0177  108C               	bcf	12,1	;volatile
+  2198                           
+  2199                           ;user.c: 265: break;
+  2200  0178  298C               	goto	l12042
+  2201  0179                     l7828:	
+  2202                           ;user.c: 266: case 2:
+  2203                           
+  2204                           
+  2205                           ;user.c: 267: ANSELAbits.ANSA2 = 0;
+  2206  0179  0023               	movlb	3	; select bank3
+  2207  017A  110C               	bcf	12,2	;volatile
+  2208                           
+  2209                           ;user.c: 268: break;
+  2210  017B  298C               	goto	l12042
+  2211  017C                     l7829:	
+  2212                           ;user.c: 269: case 6:
+  2213                           
+  2214                           
+  2215                           ;user.c: 270: ANSELCbits.ANSC2 = 0;
+  2216  017C  0023               	movlb	3	; select bank3
+  2217  017D  110E               	bcf	14,2	;volatile
+  2218                           
+  2219                           ;user.c: 271: break;
+  2220  017E  298C               	goto	l12042
+  2221  017F                     l7830:	
+  2222                           ;user.c: 273: case 7:
+  2223                           
+  2224                           
+  2225                           ;user.c: 274: ANSELCbits.ANSC3 = 0;
+  2226  017F  0023               	movlb	3	; select bank3
+  2227  0180  118E               	bcf	14,3	;volatile
+  2228                           
+  2229                           ;user.c: 275: break;
+  2230  0181  298C               	goto	l12042
+  2231  0182                     l12040:	
+  2232  0182  0875               	movf	CommandGetAn@channel,w
+  2233                           
+  2234                           ; Switch size 1, requested type "speed"
+  2235                           ; Number of cases is 5, Range of values is 0 to 7
+  2236                           ; switch strategies available:
+  2237                           ; Name         Instructions Cycles
+  2238                           ; direct_byte           22     6 (fixed)
+  2239                           ; simple_byte           16     9 (average)
+  2240                           ; jumptable            260     6 (fixed)
+  2241                           ; rangetable            12     4 (fixed)
+  2242                           ; spacedrange           21     6 (fixed)
+  2243                           ; locatedrange           8     3 (fixed)
+  2244                           ;	Chosen strategy is direct_byte
+  2245  0183  0084               	movwf	4
+  2246  0184  3008               	movlw	8
+  2247  0185  0204               	subwf	4,w
+  2248  0186  1803               	skipnc
+  2249  0187  298C               	goto	l12042
+  2250  0188  3183               	movlp	high S12360
+  2251  0189  3098               	movlw	low S12360
+  2252  018A  0704               	addwf	4,w
+  2253  018B  0082               	movwf	2
+  2254  018C                     l12042:	
+  2255                           
+  2256                           ;user.c: 280: return data;
+  2257  018C  0874               	movf	CommandGetAn@data+1,w
+  2258  018D  00F1               	movwf	?_CommandGetAn+1
+  2259  018E  0873               	movf	CommandGetAn@data,w
+  2260  018F  00F0               	movwf	?_CommandGetAn
+  2261  0190  0008               	return
+  2262  0191                     __end_of_CommandGetAn:	
+  2263                           
+  2264                           	psect	swtext1
+  2265  0390                     __pswtext1:	
+  2266  0390                     S12358:	
+  2267  0390  2935               	ljmp	l7814
+  2268  0391  293A               	ljmp	l7816
+  2269  0392  293F               	ljmp	l7817
+  2270  0393  2958               	ljmp	l7815
+  2271  0394  2958               	ljmp	l7815
+  2272  0395  2958               	ljmp	l7815
+  2273  0396  2944               	ljmp	l7818
+  2274  0397  2949               	ljmp	l7819
+  2275                           
+  2276                           	psect	swtext2
+  2277  0398                     __pswtext2:	
+  2278  0398                     S12360:	
+  2279  0398  2973               	ljmp	l7825
+  2280  0399  2976               	ljmp	l7827
+  2281  039A  2979               	ljmp	l7828
+  2282  039B  298C               	ljmp	l12042
+  2283  039C  298C               	ljmp	l12042
+  2284  039D  298C               	ljmp	l12042
+  2285  039E  297C               	ljmp	l7829
+  2286  039F  297F               	ljmp	l7830
+  2287                           
+  2288                           	psect	text516
+  2289  0191                     __ptext516:	
+  2290 ;; =============== function _CommandGetAn ends ============
+  2291                           
+  2292                           
+  2293 ;; *************** function _ReadDataSPI *****************
+  2294 ;; Defined at:
+  2295 ;;		line 26 in file "MAX31855.c"
+  2296 ;; Parameters:    Size  Location     Type
+  2297 ;;		None
+  2298 ;; Auto vars:     Size  Location     Type
+  2299 ;;  i               4    4[BANK0 ] unsigned long 
+  2300 ;;  data            4    0[BANK0 ] unsigned long 
+  2301 ;; Return value:  Size  Location     Type
+  2302 ;;                  4    0[COMMON] unsigned long 
+  2303 ;; Registers used:
+  2304 ;;		wreg, status,2, status,0
+  2305 ;; Tracked objects:
+  2306 ;;		On entry : 1F/0
+  2307 ;;		On exit  : 1F/0
+  2308 ;;		Unchanged: FFFE0/0
+  2309 ;; Data sizes:     COMMON   BANK0   BANK1
+  2310 ;;      Params:         4       0       0
+  2311 ;;      Locals:         0       8       0
+  2312 ;;      Temps:          4       0       0
+  2313 ;;      Totals:         8       8       0
+  2314 ;;Total ram usage:       16 bytes
+  2315 ;; Hardware stack levels used:    1
+  2316 ;; Hardware stack levels required when called:    1
+  2317 ;; This function calls:
+  2318 ;;		Nothing
+  2319 ;; This function is called by:
+  2320 ;;		_CommandGetTemp
+  2321 ;; This function uses a non-reentrant model
+  2322 ;;
+  2323  0191                     _ReadDataSPI:	
+  2324                           
+  2325                           ;MAX31855.c: 27: unsigned long int data = 0, i;
+  2326                           
+  2327                           ; Regs used in _ReadDataSPI: [wreg+status,2+status,0]
+  2328  0191  01A0               	clrf	ReadDataSPI@data
+  2329  0192  01A1               	clrf	ReadDataSPI@data+1
+  2330  0193  01A2               	clrf	ReadDataSPI@data+2
+  2331  0194  01A3               	clrf	ReadDataSPI@data+3
+  2332                           
+  2333                           ;MAX31855.c: 29: LATAbits.LATA4 = 0;
+  2334  0195  0022               	movlb	2	; select bank2
+  2335  0196  120C               	bcf	12,4	;volatile
+  2336                           
+  2337                           ;MAX31855.c: 32: for (i = 0; i < 32; i++) {
+  2338  0197  0020               	movlb	0	; select bank0
+  2339  0198  01A4               	clrf	ReadDataSPI@i
+  2340  0199  01A5               	clrf	ReadDataSPI@i+1
+  2341  019A  01A6               	clrf	ReadDataSPI@i+2
+  2342  019B  01A7               	clrf	ReadDataSPI@i+3
+  2343  019C                     l11068:	
+  2344                           
+  2345                           ;MAX31855.c: 33: LATCbits.LATC0 = 1;
+  2346  019C  0022               	movlb	2	; select bank2
+  2347  019D  140E               	bsf	14,0	;volatile
+  2348                           
+  2349                           ;MAX31855.c: 34: data |= (PORTCbits.RC1 & 0x01) ? 1 : 0;
+  2350  019E  3000               	movlw	0
+  2351  019F  0020               	movlb	0	; select bank0
+  2352  01A0  188E               	btfsc	14,1	;volatile
+  2353  01A1  3001               	movlw	1
+  2354  01A2  00F4               	movwf	??_ReadDataSPI
+  2355  01A3  01F5               	clrf	??_ReadDataSPI+1
+  2356  01A4  01F6               	clrf	??_ReadDataSPI+2
+  2357  01A5  01F7               	clrf	??_ReadDataSPI+3
+  2358  01A6  04A0               	iorwf	ReadDataSPI@data,f
+  2359  01A7  0875               	movf	??_ReadDataSPI+1,w
+  2360  01A8  04A1               	iorwf	ReadDataSPI@data+1,f
+  2361  01A9  0876               	movf	??_ReadDataSPI+2,w
+  2362  01AA  04A2               	iorwf	ReadDataSPI@data+2,f
+  2363  01AB  0877               	movf	??_ReadDataSPI+3,w
+  2364  01AC  04A3               	iorwf	ReadDataSPI@data+3,f
+  2365                           
+  2366                           ;MAX31855.c: 36: if (i != 31) data <<= 1;
+  2367  01AD  0824               	movf	ReadDataSPI@i,w
+  2368  01AE  3A1F               	xorlw	31
+  2369  01AF  0425               	iorwf	ReadDataSPI@i+1,w
+  2370  01B0  0426               	iorwf	ReadDataSPI@i+2,w
+  2371  01B1  0427               	iorwf	ReadDataSPI@i+3,w
+  2372  01B2  1903               	skipnz
+  2373  01B3  29B8               	goto	l12016
+  2374  01B4  35A0               	lslf	ReadDataSPI@data,f
+  2375  01B5  0DA1               	rlf	ReadDataSPI@data+1,f
+  2376  01B6  0DA2               	rlf	ReadDataSPI@data+2,f
+  2377  01B7  0DA3               	rlf	ReadDataSPI@data+3,f
+  2378  01B8                     l12016:	
+  2379                           
+  2380                           ;MAX31855.c: 37: LATCbits.LATC0 = 0;
+  2381  01B8  0022               	movlb	2	; select bank2
+  2382  01B9  100E               	bcf	14,0	;volatile
+  2383  01BA  0020               	movlb	0	; select bank0
+  2384  01BB  0AA4               	incf	ReadDataSPI@i,f
+  2385  01BC  1903               	skipnz
+  2386  01BD  0AA5               	incf	ReadDataSPI@i+1,f
+  2387  01BE  1903               	skipnz
+  2388  01BF  0AA6               	incf	ReadDataSPI@i+2,f
+  2389  01C0  1903               	skipnz
+  2390  01C1  0AA7               	incf	ReadDataSPI@i+3,f
+  2391  01C2  3000               	movlw	0
+  2392  01C3  0227               	subwf	ReadDataSPI@i+3,w
+  2393  01C4  1D03               	skipz
+  2394  01C5  29D0               	goto	u435
+  2395  01C6  3000               	movlw	0
+  2396  01C7  0226               	subwf	ReadDataSPI@i+2,w
+  2397  01C8  1D03               	skipz
+  2398  01C9  29D0               	goto	u435
+  2399  01CA  3000               	movlw	0
+  2400  01CB  0225               	subwf	ReadDataSPI@i+1,w
+  2401  01CC  1D03               	skipz
+  2402  01CD  29D0               	goto	u435
+  2403  01CE  3020               	movlw	32
+  2404  01CF  0224               	subwf	ReadDataSPI@i,w
+  2405  01D0                     u435:	
+  2406  01D0  1C03               	skipc
+  2407  01D1  299C               	goto	l11068
+  2408                           
+  2409                           ;MAX31855.c: 38: }
+  2410                           ;MAX31855.c: 40: LATAbits.LATA4 = 1;
+  2411  01D2  0022               	movlb	2	; select bank2
+  2412  01D3  160C               	bsf	12,4	;volatile
+  2413                           
+  2414                           ;MAX31855.c: 41: return data;
+  2415  01D4  0020               	movlb	0	; select bank0
+  2416  01D5  0823               	movf	ReadDataSPI@data+3,w
+  2417  01D6  00F3               	movwf	?_ReadDataSPI+3
+  2418  01D7  0822               	movf	ReadDataSPI@data+2,w
+  2419  01D8  00F2               	movwf	?_ReadDataSPI+2
+  2420  01D9  0821               	movf	ReadDataSPI@data+1,w
+  2421  01DA  00F1               	movwf	?_ReadDataSPI+1
+  2422  01DB  0820               	movf	ReadDataSPI@data,w
+  2423  01DC  00F0               	movwf	?_ReadDataSPI
+  2424  01DD  0008               	return
+  2425  01DE                     __end_of_ReadDataSPI:	
+  2426                           
+  2427                           	psect	text517
+  2428  029A                     __ptext517:	
+  2429 ;; =============== function _ReadDataSPI ends ============
+  2430                           
+  2431                           
+  2432 ;; *************** function _CommandGetPort *****************
+  2433 ;; Defined at:
+  2434 ;;		line 160 in file "user.c"
+  2435 ;; Parameters:    Size  Location     Type
+  2436 ;;		None
+  2437 ;; Auto vars:     Size  Location     Type
+  2438 ;;  data            1    1[COMMON] unsigned char 
+  2439 ;; Return value:  Size  Location     Type
+  2440 ;;                  1    wreg      unsigned char 
+  2441 ;; Registers used:
+  2442 ;;		wreg, status,2, status,0
+  2443 ;; Tracked objects:
+  2444 ;;		On entry : 1F/0
+  2445 ;;		On exit  : 1F/0
+  2446 ;;		Unchanged: FFFE0/0
+  2447 ;; Data sizes:     COMMON   BANK0   BANK1
+  2448 ;;      Params:         0       0       0
+  2449 ;;      Locals:         1       0       0
+  2450 ;;      Temps:          1       0       0
+  2451 ;;      Totals:         2       0       0
+  2452 ;;Total ram usage:        2 bytes
+  2453 ;; Hardware stack levels used:    1
+  2454 ;; Hardware stack levels required when called:    1
+  2455 ;; This function calls:
+  2456 ;;		Nothing
+  2457 ;; This function is called by:
+  2458 ;;		_StartSystem
+  2459 ;; This function uses a non-reentrant model
+  2460 ;;
+  2461  029A                     _CommandGetPort:	
+  2462                           
+  2463                           ;user.c: 163: data = PORTCbits.RC3;
+  2464                           
+  2465                           ; Regs used in _CommandGetPort: [wreg+status,2+status,0]
+  2466  029A  3000               	movlw	0
+  2467  029B  198E               	btfsc	14,3	;volatile
+  2468  029C  3001               	movlw	1
+  2469  029D  00F1               	movwf	CommandGetPort@data
+  2470                           
+  2471                           ;user.c: 164: data <<= 1;
+  2472  029E  35F1               	lslf	CommandGetPort@data,f
+  2473                           
+  2474                           ;user.c: 165: data |= PORTCbits.RC2;
+  2475  029F  0C0E               	rrf	14,w	;volatile
+  2476  02A0  0C89               	rrf	9,f
+  2477  02A1  3901               	andlw	1
+  2478  02A2  04F1               	iorwf	CommandGetPort@data,f
+  2479                           
+  2480                           ;user.c: 166: data <<= 1;
+  2481  02A3  35F1               	lslf	CommandGetPort@data,f
+  2482                           
+  2483                           ;user.c: 167: data |= PORTAbits.RA5;
+  2484  02A4  0E0C               	swapf	12,w	;volatile
+  2485  02A5  0C89               	rrf	9,f
+  2486  02A6  3901               	andlw	1
+  2487  02A7  04F1               	iorwf	CommandGetPort@data,f
+  2488                           
+  2489                           ;user.c: 168: data <<= 1;
+  2490  02A8  35F1               	lslf	CommandGetPort@data,f
+  2491                           
+  2492                           ;user.c: 169: data |= PORTAbits.RA3;
+  2493  02A9  0C0C               	rrf	12,w	;volatile
+  2494  02AA  00F0               	movwf	??_CommandGetPort
+  2495  02AB  0CF0               	rrf	??_CommandGetPort,f
+  2496  02AC  0C70               	rrf	??_CommandGetPort,w
+  2497  02AD  3901               	andlw	1
+  2498  02AE  04F1               	iorwf	CommandGetPort@data,f
+  2499                           
+  2500                           ;user.c: 170: data <<= 1;
+  2501  02AF  35F1               	lslf	CommandGetPort@data,f
+  2502                           
+  2503                           ;user.c: 171: data |= PORTAbits.RA2;
+  2504  02B0  0C0C               	rrf	12,w	;volatile
+  2505  02B1  0C89               	rrf	9,f
+  2506  02B2  3901               	andlw	1
+  2507  02B3  04F1               	iorwf	CommandGetPort@data,f
+  2508                           
+  2509                           ;user.c: 172: data <<= 1;
+  2510  02B4  35F1               	lslf	CommandGetPort@data,f
+  2511                           
+  2512                           ;user.c: 173: data |= PORTAbits.RA1;
+  2513  02B5  0C0C               	rrf	12,w	;volatile
+  2514  02B6  3901               	andlw	1
+  2515  02B7  04F1               	iorwf	CommandGetPort@data,f
+  2516                           
+  2517                           ;user.c: 174: data <<= 1;
+  2518  02B8  35F1               	lslf	CommandGetPort@data,f
+  2519                           
+  2520                           ;user.c: 175: data |= PORTAbits.RA0;
+  2521  02B9  080C               	movf	12,w	;volatile
+  2522  02BA  3901               	andlw	1
+  2523  02BB  04F1               	iorwf	CommandGetPort@data,f
+  2524                           
+  2525                           ;user.c: 176: return data;
+  2526  02BC  0871               	movf	CommandGetPort@data,w
+  2527  02BD  0008               	return
+  2528  02BE                     __end_of_CommandGetPort:	
+  2529                           
+  2530                           	psect	text518
+  2531  03A0                     __ptext518:	
+  2532 ;; =============== function _CommandGetPort ends ============
+  2533                           
+  2534                           
+  2535 ;; *************** function _UnlockFlash *****************
+  2536 ;; Defined at:
+  2537 ;;		line 94 in file "user.c"
+  2538 ;; Parameters:    Size  Location     Type
+  2539 ;;		None
+  2540 ;; Auto vars:     Size  Location     Type
+  2541 ;;		None
+  2542 ;; Return value:  Size  Location     Type
+  2543 ;;		None               void
+  2544 ;; Registers used:
+  2545 ;;		wreg
+  2546 ;; Tracked objects:
+  2547 ;;		On entry : 1F/3
+  2548 ;;		On exit  : 0/0
+  2549 ;;		Unchanged: FFE00/0
+  2550 ;; Data sizes:     COMMON   BANK0   BANK1
+  2551 ;;      Params:         0       0       0
+  2552 ;;      Locals:         0       0       0
+  2553 ;;      Temps:          0       0       0
+  2554 ;;      Totals:         0       0       0
+  2555 ;;Total ram usage:        0 bytes
+  2556 ;; Hardware stack levels used:    1
+  2557 ;; Hardware stack levels required when called:    1
+  2558 ;; This function calls:
+  2559 ;;		Nothing
+  2560 ;; This function is called by:
+  2561 ;;		_EraseFlash
+  2562 ;;		_WriteFlash
+  2563 ;; This function uses a non-reentrant model
+  2564 ;;
+  2565  03A0                     _UnlockFlash:	
+  2566                           
+  2567                           ;user.c: 95: PMCON2 = 0x55;
+  2568                           
+  2569                           ; Regs used in _UnlockFlash: [wreg]
+  2570  03A0  3055               	movlw	85
+  2571  03A1  0096               	movwf	22	;volatile
+  2572                           
+  2573                           ;user.c: 96: PMCON2 = 0xAA;
+  2574  03A2  30AA               	movlw	170
+  2575  03A3  0096               	movwf	22	;volatile
+  2576                           
+  2577                           ;user.c: 97: PMCON1bits.WR = 1;
+  2578  03A4  1495               	bsf	21,1	;volatile
+  2579  03A5  0000               	nop	;#
+  2580  03A6  0000               	nop	;#
+  2581  03A7  0008               	return
+  2582  03A8                     __end_of_UnlockFlash:	
+  2583                           
+  2584                           	psect	text519
+  2585  02F5                     __ptext519:	
+  2586 ;; =============== function _UnlockFlash ends ============
+  2587                           
+  2588                           
+  2589 ;; *************** function _ReadFlash *****************
+  2590 ;; Defined at:
+  2591 ;;		line 63 in file "user.c"
+  2592 ;; Parameters:    Size  Location     Type
+  2593 ;;  address         2    0[COMMON] unsigned int 
+  2594 ;; Auto vars:     Size  Location     Type
+  2595 ;;  data            2    2[COMMON] unsigned int 
+  2596 ;; Return value:  Size  Location     Type
+  2597 ;;                  2    0[COMMON] unsigned int 
+  2598 ;; Registers used:
+  2599 ;;		wreg, status,2
+  2600 ;; Tracked objects:
+  2601 ;;		On entry : 1F/4
+  2602 ;;		On exit  : 1F/3
+  2603 ;;		Unchanged: FFE00/0
+  2604 ;; Data sizes:     COMMON   BANK0   BANK1
+  2605 ;;      Params:         2       0       0
+  2606 ;;      Locals:         2       0       0
+  2607 ;;      Temps:          0       0       0
+  2608 ;;      Totals:         4       0       0
+  2609 ;;Total ram usage:        4 bytes
+  2610 ;; Hardware stack levels used:    1
+  2611 ;; Hardware stack levels required when called:    1
+  2612 ;; This function calls:
+  2613 ;;		Nothing
+  2614 ;; This function is called by:
+  2615 ;;		_InitAddress
+  2616 ;; This function uses a non-reentrant model
+  2617 ;;
+  2618  02F5                     _ReadFlash:	
+  2619                           
+  2620                           ;user.c: 65: PMADRL = address & 0x00FF;
+  2621                           
+  2622                           ; Regs used in _ReadFlash: [wreg+status,2]
+  2623  02F5  0870               	movf	ReadFlash@address,w
+  2624  02F6  0023               	movlb	3	; select bank3
+  2625  02F7  0091               	movwf	17	;volatile
+  2626                           
+  2627                           ;user.c: 66: address >>= 8;
+  2628  02F8  0871               	movf	ReadFlash@address+1,w
+  2629  02F9  00F0               	movwf	ReadFlash@address
+  2630  02FA  01F1               	clrf	ReadFlash@address+1
+  2631                           
+  2632                           ;user.c: 67: PMADRH = address & 0x00FF;
+  2633  02FB  0092               	movwf	18	;volatile
+  2634                           
+  2635                           ;user.c: 68: PMCON1bits.CFGS = 0;
+  2636  02FC  1315               	bcf	21,6	;volatile
+  2637                           
+  2638                           ;user.c: 69: PMCON1bits.RD = 1;
+  2639  02FD  1415               	bsf	21,0	;volatile
+  2640  02FE  0000               	nop	;#
+  2641  02FF  0000               	nop	;#
+  2642                           
+  2643                           ;user.c: 73: data = PMDATH;
+  2644  0300  0023               	movlb	3	; select bank3
+  2645  0301  0814               	movf	20,w	;volatile
+  2646  0302  00F2               	movwf	ReadFlash@data
+  2647  0303  01F3               	clrf	ReadFlash@data+1
+  2648                           
+  2649                           ;user.c: 74: data <<= 8;
+  2650  0304  00F3               	movwf	ReadFlash@data+1
+  2651  0305  01F2               	clrf	ReadFlash@data
+  2652                           
+  2653                           ;user.c: 75: data |= PMDATL;
+  2654  0306  0813               	movf	19,w	;volatile
+  2655  0307  04F2               	iorwf	ReadFlash@data,f
+  2656                           
+  2657                           ;user.c: 76: return data;
+  2658  0308  0873               	movf	ReadFlash@data+1,w
+  2659  0309  00F1               	movwf	?_ReadFlash+1
+  2660  030A  0872               	movf	ReadFlash@data,w
+  2661  030B  00F0               	movwf	?_ReadFlash
+  2662  030C  0008               	return
+  2663  030D                     __end_of_ReadFlash:	
+  2664                           
+  2665                           	psect	text520
+  2666  0263                     __ptext520:	
+  2667 ;; =============== function _ReadFlash ends ============
+  2668                           
+  2669                           
+  2670 ;; *************** function _CommandSetPullUps *****************
+  2671 ;; Defined at:
+  2672 ;;		line 188 in file "user.c"
+  2673 ;; Parameters:    Size  Location     Type
+  2674 ;;  data            1    wreg     unsigned char 
+  2675 ;; Auto vars:     Size  Location     Type
+  2676 ;;  data            1    1[COMMON] unsigned char 
+  2677 ;; Return value:  Size  Location     Type
+  2678 ;;		None               void
+  2679 ;; Registers used:
+  2680 ;;		wreg, status,2, status,0
+  2681 ;; Tracked objects:
+  2682 ;;		On entry : 1E/0
+  2683 ;;		On exit  : 1F/4
+  2684 ;;		Unchanged: FFFE0/0
+  2685 ;; Data sizes:     COMMON   BANK0   BANK1
+  2686 ;;      Params:         0       0       0
+  2687 ;;      Locals:         1       0       0
+  2688 ;;      Temps:          1       0       0
+  2689 ;;      Totals:         2       0       0
+  2690 ;;Total ram usage:        2 bytes
+  2691 ;; Hardware stack levels used:    1
+  2692 ;; Hardware stack levels required when called:    1
+  2693 ;; This function calls:
+  2694 ;;		Nothing
+  2695 ;; This function is called by:
+  2696 ;;		_InitApp
+  2697 ;;		_StartSystem
+  2698 ;; This function uses a non-reentrant model
+  2699 ;;
+  2700  0263                     _CommandSetPullUps:	
+  2701                           
+  2702                           ; Regs used in _CommandSetPullUps: [wreg+status,2+status,0]
+  2703                           ;CommandSetPullUps@data stored from wreg
+  2704  0263  00F1               	movwf	CommandSetPullUps@data
+  2705                           
+  2706                           ;user.c: 189: WPUAbits.WPUA0 = data & 0x01;
+  2707  0264  3901               	andlw	1
+  2708  0265  00F0               	movwf	??_CommandSetPullUps
+  2709  0266  0024               	movlb	4	; select bank4
+  2710  0267  080C               	movf	12,w	;volatile
+  2711  0268  0670               	xorwf	??_CommandSetPullUps,w
+  2712  0269  39FE               	andlw	-2
+  2713  026A  0670               	xorwf	??_CommandSetPullUps,w
+  2714  026B  008C               	movwf	12	;volatile
+  2715                           
+  2716                           ;user.c: 190: data >>= 1;
+  2717  026C  36F1               	lsrf	CommandSetPullUps@data,f
+  2718                           
+  2719                           ;user.c: 191: WPUAbits.WPUA1 = data & 0x01;
+  2720  026D  0871               	movf	CommandSetPullUps@data,w
+  2721  026E  3901               	andlw	1
+  2722  026F  00F0               	movwf	??_CommandSetPullUps
+  2723  0270  0DF0               	rlf	??_CommandSetPullUps,f
+  2724  0271  080C               	movf	12,w	;volatile
+  2725  0272  0670               	xorwf	??_CommandSetPullUps,w
+  2726  0273  39FD               	andlw	-3
+  2727  0274  0670               	xorwf	??_CommandSetPullUps,w
+  2728  0275  008C               	movwf	12	;volatile
+  2729                           
+  2730                           ;user.c: 192: data >>= 1;
+  2731  0276  36F1               	lsrf	CommandSetPullUps@data,f
+  2732                           
+  2733                           ;user.c: 193: WPUAbits.WPUA2 = data & 0x01;
+  2734  0277  0871               	movf	CommandSetPullUps@data,w
+  2735  0278  3901               	andlw	1
+  2736  0279  00F0               	movwf	??_CommandSetPullUps
+  2737  027A  0DF0               	rlf	??_CommandSetPullUps,f
+  2738  027B  0DF0               	rlf	??_CommandSetPullUps,f
+  2739  027C  080C               	movf	12,w	;volatile
+  2740  027D  0670               	xorwf	??_CommandSetPullUps,w
+  2741  027E  39FB               	andlw	-5
+  2742  027F  0670               	xorwf	??_CommandSetPullUps,w
+  2743  0280  008C               	movwf	12	;volatile
+  2744                           
+  2745                           ;user.c: 194: data >>= 1;
+  2746  0281  36F1               	lsrf	CommandSetPullUps@data,f
+  2747                           
+  2748                           ;user.c: 195: WPUAbits.WPUA3 = data & 0x01;
+  2749  0282  0871               	movf	CommandSetPullUps@data,w
+  2750  0283  3901               	andlw	1
+  2751  0284  00F0               	movwf	??_CommandSetPullUps
+  2752  0285  0DF0               	rlf	??_CommandSetPullUps,f
+  2753  0286  0DF0               	rlf	??_CommandSetPullUps,f
+  2754  0287  0DF0               	rlf	??_CommandSetPullUps,f
+  2755  0288  080C               	movf	12,w	;volatile
+  2756  0289  0670               	xorwf	??_CommandSetPullUps,w
+  2757  028A  39F7               	andlw	-9
+  2758  028B  0670               	xorwf	??_CommandSetPullUps,w
+  2759  028C  008C               	movwf	12	;volatile
+  2760                           
+  2761                           ;user.c: 196: data >>= 1;
+  2762  028D  36F1               	lsrf	CommandSetPullUps@data,f
+  2763                           
+  2764                           ;user.c: 197: WPUAbits.WPUA5 = data & 0x01;
+  2765  028E  0871               	movf	CommandSetPullUps@data,w
+  2766  028F  3901               	andlw	1
+  2767  0290  00F0               	movwf	??_CommandSetPullUps
+  2768  0291  0EF0               	swapf	??_CommandSetPullUps,f
+  2769  0292  0DF0               	rlf	??_CommandSetPullUps,f
+  2770  0293  080C               	movf	12,w	;volatile
+  2771  0294  0670               	xorwf	??_CommandSetPullUps,w
+  2772  0295  39DF               	andlw	-33
+  2773  0296  0670               	xorwf	??_CommandSetPullUps,w
+  2774  0297  008C               	movwf	12	;volatile
+  2775                           
+  2776                           ;user.c: 198: data >>= 1;
+  2777  0298  36F1               	lsrf	CommandSetPullUps@data,f
+  2778  0299  0008               	return
+  2779  029A                     __end_of_CommandSetPullUps:	
+  2780                           
+  2781                           	psect	text521
+  2782  01DE                     __ptext521:	
+  2783 ;; =============== function _CommandSetPullUps ends ============
+  2784                           
+  2785                           
+  2786 ;; *************** function _CommandSetTris *****************
+  2787 ;; Defined at:
+  2788 ;;		line 122 in file "user.c"
+  2789 ;; Parameters:    Size  Location     Type
+  2790 ;;  data            1    wreg     unsigned char 
+  2791 ;; Auto vars:     Size  Location     Type
+  2792 ;;  data            1    1[COMMON] unsigned char 
+  2793 ;; Return value:  Size  Location     Type
+  2794 ;;		None               void
+  2795 ;; Registers used:
+  2796 ;;		wreg, status,2, status,0
+  2797 ;; Tracked objects:
+  2798 ;;		On entry : 1D/0
+  2799 ;;		On exit  : 1F/1
+  2800 ;;		Unchanged: FFFE0/0
+  2801 ;; Data sizes:     COMMON   BANK0   BANK1
+  2802 ;;      Params:         0       0       0
+  2803 ;;      Locals:         1       0       0
+  2804 ;;      Temps:          1       0       0
+  2805 ;;      Totals:         2       0       0
+  2806 ;;Total ram usage:        2 bytes
+  2807 ;; Hardware stack levels used:    1
+  2808 ;; Hardware stack levels required when called:    1
+  2809 ;; This function calls:
+  2810 ;;		Nothing
+  2811 ;; This function is called by:
+  2812 ;;		_InitApp
+  2813 ;;		_StartSystem
+  2814 ;; This function uses a non-reentrant model
+  2815 ;;
+  2816  01DE                     _CommandSetTris:	
+  2817                           
+  2818                           ; Regs used in _CommandSetTris: [wreg+status,2+status,0]
+  2819                           ;CommandSetTris@data stored from wreg
+  2820  01DE  00F1               	movwf	CommandSetTris@data
+  2821                           
+  2822                           ;user.c: 124: TRISAbits.TRISA0 = data & 0x01;
+  2823  01DF  3901               	andlw	1
+  2824  01E0  00F0               	movwf	??_CommandSetTris
+  2825  01E1  0021               	movlb	1	; select bank1
+  2826  01E2  080C               	movf	12,w	;volatile
+  2827  01E3  0670               	xorwf	??_CommandSetTris,w
+  2828  01E4  39FE               	andlw	-2
+  2829  01E5  0670               	xorwf	??_CommandSetTris,w
+  2830  01E6  008C               	movwf	12	;volatile
+  2831                           
+  2832                           ;user.c: 125: data >>= 1;
+  2833  01E7  36F1               	lsrf	CommandSetTris@data,f
+  2834                           
+  2835                           ;user.c: 126: TRISAbits.TRISA1 = data & 0x01;
+  2836  01E8  0871               	movf	CommandSetTris@data,w
+  2837  01E9  3901               	andlw	1
+  2838  01EA  00F0               	movwf	??_CommandSetTris
+  2839  01EB  0DF0               	rlf	??_CommandSetTris,f
+  2840  01EC  080C               	movf	12,w	;volatile
+  2841  01ED  0670               	xorwf	??_CommandSetTris,w
+  2842  01EE  39FD               	andlw	-3
+  2843  01EF  0670               	xorwf	??_CommandSetTris,w
+  2844  01F0  008C               	movwf	12	;volatile
+  2845                           
+  2846                           ;user.c: 127: data >>= 1;
+  2847  01F1  36F1               	lsrf	CommandSetTris@data,f
+  2848                           
+  2849                           ;user.c: 128: TRISAbits.TRISA2 = data & 0x01;
+  2850  01F2  0871               	movf	CommandSetTris@data,w
+  2851  01F3  3901               	andlw	1
+  2852  01F4  00F0               	movwf	??_CommandSetTris
+  2853  01F5  0DF0               	rlf	??_CommandSetTris,f
+  2854  01F6  0DF0               	rlf	??_CommandSetTris,f
+  2855  01F7  080C               	movf	12,w	;volatile
+  2856  01F8  0670               	xorwf	??_CommandSetTris,w
+  2857  01F9  39FB               	andlw	-5
+  2858  01FA  0670               	xorwf	??_CommandSetTris,w
+  2859  01FB  008C               	movwf	12	;volatile
+  2860                           
+  2861                           ;user.c: 129: data >>= 1;
+  2862  01FC  36F1               	lsrf	CommandSetTris@data,f
+  2863                           
+  2864                           ;user.c: 130: TRISAbits.TRISA3 = 1;
+  2865  01FD  158C               	bsf	12,3	;volatile
+  2866                           
+  2867                           ;user.c: 131: data >>= 1;
+  2868  01FE  36F1               	lsrf	CommandSetTris@data,f
+  2869                           
+  2870                           ;user.c: 132: TRISAbits.TRISA5 = data & 0x01;
+  2871  01FF  0871               	movf	CommandSetTris@data,w
+  2872  0200  3901               	andlw	1
+  2873  0201  00F0               	movwf	??_CommandSetTris
+  2874  0202  0EF0               	swapf	??_CommandSetTris,f
+  2875  0203  0DF0               	rlf	??_CommandSetTris,f
+  2876  0204  080C               	movf	12,w	;volatile
+  2877  0205  0670               	xorwf	??_CommandSetTris,w
+  2878  0206  39DF               	andlw	-33
+  2879  0207  0670               	xorwf	??_CommandSetTris,w
+  2880  0208  008C               	movwf	12	;volatile
+  2881                           
+  2882                           ;user.c: 133: data >>= 1;
+  2883  0209  36F1               	lsrf	CommandSetTris@data,f
+  2884                           
+  2885                           ;user.c: 134: TRISCbits.TRISC2 = data & 0x01;
+  2886  020A  0871               	movf	CommandSetTris@data,w
+  2887  020B  3901               	andlw	1
+  2888  020C  00F0               	movwf	??_CommandSetTris
+  2889  020D  0DF0               	rlf	??_CommandSetTris,f
+  2890  020E  0DF0               	rlf	??_CommandSetTris,f
+  2891  020F  080E               	movf	14,w	;volatile
+  2892  0210  0670               	xorwf	??_CommandSetTris,w
+  2893  0211  39FB               	andlw	-5
+  2894  0212  0670               	xorwf	??_CommandSetTris,w
+  2895  0213  008E               	movwf	14	;volatile
+  2896                           
+  2897                           ;user.c: 135: data >>= 1;
+  2898  0214  36F1               	lsrf	CommandSetTris@data,f
+  2899                           
+  2900                           ;user.c: 136: TRISCbits.TRISC3 = data & 0x01;
+  2901  0215  0871               	movf	CommandSetTris@data,w
+  2902  0216  3901               	andlw	1
+  2903  0217  00F0               	movwf	??_CommandSetTris
+  2904  0218  0DF0               	rlf	??_CommandSetTris,f
+  2905  0219  0DF0               	rlf	??_CommandSetTris,f
+  2906  021A  0DF0               	rlf	??_CommandSetTris,f
+  2907  021B  080E               	movf	14,w	;volatile
+  2908  021C  0670               	xorwf	??_CommandSetTris,w
+  2909  021D  39F7               	andlw	-9
+  2910  021E  0670               	xorwf	??_CommandSetTris,w
+  2911  021F  008E               	movwf	14	;volatile
+  2912  0220  0008               	return
+  2913  0221                     __end_of_CommandSetTris:	
+  2914                           
+  2915                           	psect	text522
+  2916  0221                     __ptext522:	
+  2917 ;; =============== function _CommandSetTris ends ============
+  2918                           
+  2919                           
+  2920 ;; *************** function _CommandSetLat *****************
+  2921 ;; Defined at:
+  2922 ;;		line 141 in file "user.c"
+  2923 ;; Parameters:    Size  Location     Type
+  2924 ;;  data            1    wreg     unsigned char 
+  2925 ;; Auto vars:     Size  Location     Type
+  2926 ;;  data            1    1[COMMON] unsigned char 
+  2927 ;; Return value:  Size  Location     Type
+  2928 ;;		None               void
+  2929 ;; Registers used:
+  2930 ;;		wreg, status,2, status,0
+  2931 ;; Tracked objects:
+  2932 ;;		On entry : 1F/0
+  2933 ;;		On exit  : 1F/2
+  2934 ;;		Unchanged: FFFE0/0
+  2935 ;; Data sizes:     COMMON   BANK0   BANK1
+  2936 ;;      Params:         0       0       0
+  2937 ;;      Locals:         1       0       0
+  2938 ;;      Temps:          1       0       0
+  2939 ;;      Totals:         2       0       0
+  2940 ;;Total ram usage:        2 bytes
+  2941 ;; Hardware stack levels used:    1
+  2942 ;; Hardware stack levels required when called:    1
+  2943 ;; This function calls:
+  2944 ;;		Nothing
+  2945 ;; This function is called by:
+  2946 ;;		_InitApp
+  2947 ;;		_StartSystem
+  2948 ;; This function uses a non-reentrant model
+  2949 ;;
+  2950  0221                     _CommandSetLat:	
+  2951                           
+  2952                           ; Regs used in _CommandSetLat: [wreg+status,2+status,0]
+  2953                           ;CommandSetLat@data stored from wreg
+  2954  0221  00F1               	movwf	CommandSetLat@data
+  2955                           
+  2956                           ;user.c: 143: LATAbits.LATA0 = data & 0x01;
+  2957  0222  3901               	andlw	1
+  2958  0223  00F0               	movwf	??_CommandSetLat
+  2959  0224  0022               	movlb	2	; select bank2
+  2960  0225  080C               	movf	12,w	;volatile
+  2961  0226  0670               	xorwf	??_CommandSetLat,w
+  2962  0227  39FE               	andlw	-2
+  2963  0228  0670               	xorwf	??_CommandSetLat,w
+  2964  0229  008C               	movwf	12	;volatile
+  2965                           
+  2966                           ;user.c: 144: data >>= 1;
+  2967  022A  36F1               	lsrf	CommandSetLat@data,f
+  2968                           
+  2969                           ;user.c: 145: LATAbits.LATA1 = data & 0x01;
+  2970  022B  0871               	movf	CommandSetLat@data,w
+  2971  022C  3901               	andlw	1
+  2972  022D  00F0               	movwf	??_CommandSetLat
+  2973  022E  0DF0               	rlf	??_CommandSetLat,f
+  2974  022F  080C               	movf	12,w	;volatile
+  2975  0230  0670               	xorwf	??_CommandSetLat,w
+  2976  0231  39FD               	andlw	-3
+  2977  0232  0670               	xorwf	??_CommandSetLat,w
+  2978  0233  008C               	movwf	12	;volatile
+  2979                           
+  2980                           ;user.c: 146: data >>= 1;
+  2981  0234  36F1               	lsrf	CommandSetLat@data,f
+  2982                           
+  2983                           ;user.c: 147: LATAbits.LATA2 = data & 0x01;
+  2984  0235  0871               	movf	CommandSetLat@data,w
+  2985  0236  3901               	andlw	1
+  2986  0237  00F0               	movwf	??_CommandSetLat
+  2987  0238  0DF0               	rlf	??_CommandSetLat,f
+  2988  0239  0DF0               	rlf	??_CommandSetLat,f
+  2989  023A  080C               	movf	12,w	;volatile
+  2990  023B  0670               	xorwf	??_CommandSetLat,w
+  2991  023C  39FB               	andlw	-5
+  2992  023D  0670               	xorwf	??_CommandSetLat,w
+  2993  023E  008C               	movwf	12	;volatile
+  2994                           
+  2995                           ;user.c: 148: data >>= 1;
+  2996  023F  36F1               	lsrf	CommandSetLat@data,f
+  2997                           
+  2998                           ;user.c: 150: data >>= 1;
+  2999  0240  36F1               	lsrf	CommandSetLat@data,f
+  3000                           
+  3001                           ;user.c: 151: LATAbits.LATA5 = data & 0x01;
+  3002  0241  0871               	movf	CommandSetLat@data,w
+  3003  0242  3901               	andlw	1
+  3004  0243  00F0               	movwf	??_CommandSetLat
+  3005  0244  0EF0               	swapf	??_CommandSetLat,f
+  3006  0245  0DF0               	rlf	??_CommandSetLat,f
+  3007  0246  080C               	movf	12,w	;volatile
+  3008  0247  0670               	xorwf	??_CommandSetLat,w
+  3009  0248  39DF               	andlw	-33
+  3010  0249  0670               	xorwf	??_CommandSetLat,w
+  3011  024A  008C               	movwf	12	;volatile
+  3012                           
+  3013                           ;user.c: 152: data >>= 1;
+  3014  024B  36F1               	lsrf	CommandSetLat@data,f
+  3015                           
+  3016                           ;user.c: 153: LATCbits.LATC2 = data & 0x01;
+  3017  024C  0871               	movf	CommandSetLat@data,w
+  3018  024D  3901               	andlw	1
+  3019  024E  00F0               	movwf	??_CommandSetLat
+  3020  024F  0DF0               	rlf	??_CommandSetLat,f
+  3021  0250  0DF0               	rlf	??_CommandSetLat,f
+  3022  0251  080E               	movf	14,w	;volatile
+  3023  0252  0670               	xorwf	??_CommandSetLat,w
+  3024  0253  39FB               	andlw	-5
+  3025  0254  0670               	xorwf	??_CommandSetLat,w
+  3026  0255  008E               	movwf	14	;volatile
+  3027                           
+  3028                           ;user.c: 154: data >>= 1;
+  3029  0256  36F1               	lsrf	CommandSetLat@data,f
+  3030                           
+  3031                           ;user.c: 155: LATCbits.LATC3 = data & 0x01;
+  3032  0257  0871               	movf	CommandSetLat@data,w
+  3033  0258  3901               	andlw	1
+  3034  0259  00F0               	movwf	??_CommandSetLat
+  3035  025A  0DF0               	rlf	??_CommandSetLat,f
+  3036  025B  0DF0               	rlf	??_CommandSetLat,f
+  3037  025C  0DF0               	rlf	??_CommandSetLat,f
+  3038  025D  080E               	movf	14,w	;volatile
+  3039  025E  0670               	xorwf	??_CommandSetLat,w
+  3040  025F  39F7               	andlw	-9
+  3041  0260  0670               	xorwf	??_CommandSetLat,w
+  3042  0261  008E               	movwf	14	;volatile
+  3043  0262  0008               	return
+  3044  0263                     __end_of_CommandSetLat:	
+  3045                           
+  3046                           	psect	text523
+  3047  03A8                     __ptext523:	
+  3048 ;; =============== function _CommandSetLat ends ============
+  3049                           
+  3050                           
+  3051 ;; *************** function _ConfigureOscillator *****************
+  3052 ;; Defined at:
+  3053 ;;		line 11 in file "system.c"
+  3054 ;; Parameters:    Size  Location     Type
+  3055 ;;		None
+  3056 ;; Auto vars:     Size  Location     Type
+  3057 ;;		None
+  3058 ;; Return value:  Size  Location     Type
+  3059 ;;		None               void
+  3060 ;; Registers used:
+  3061 ;;		wreg, status,2, status,0
+  3062 ;; Tracked objects:
+  3063 ;;		On entry : 17F/0
+  3064 ;;		On exit  : 17F/1
+  3065 ;;		Unchanged: FFE80/0
+  3066 ;; Data sizes:     COMMON   BANK0   BANK1
+  3067 ;;      Params:         0       0       0
+  3068 ;;      Locals:         0       0       0
+  3069 ;;      Temps:          0       0       0
+  3070 ;;      Totals:         0       0       0
+  3071 ;;Total ram usage:        0 bytes
+  3072 ;; Hardware stack levels used:    1
+  3073 ;; Hardware stack levels required when called:    1
+  3074 ;; This function calls:
+  3075 ;;		Nothing
+  3076 ;; This function is called by:
+  3077 ;;		_main
+  3078 ;; This function uses a non-reentrant model
+  3079 ;;
+  3080  03A8                     _ConfigureOscillator:	
+  3081                           
+  3082                           ;system.c: 12: OSCCONbits.IRCF = 0b1111;
+  3083                           
+  3084                           ; Regs used in _ConfigureOscillator: [wreg+status,2+status,0]
+  3085  03A8  3078               	movlw	120
+  3086  03A9  0021               	movlb	1	; select bank1
+  3087  03AA  0499               	iorwf	25,f	;volatile
+  3088                           
+  3089                           ;system.c: 13: OSCCONbits.SCS = 0b11;
+  3090  03AB  3003               	movlw	3
+  3091  03AC  0499               	iorwf	25,f	;volatile
+  3092  03AD                     l6200:	
+  3093                           ;system.c: 15: while(!OSCSTATbits.HFIOFR);
+  3094                           
+  3095  03AD  1A1A               	btfsc	26,4	;volatile
+  3096  03AE  0008               	return
+  3097  03AF  2BAD               	goto	l6200
+  3098  03B0                     __end_of_ConfigureOscillator:	
+  3099                           
+  3100                           	psect	intentry
+  3101  0004                     __pintentry:	
+  3102 ;; =============== function _ConfigureOscillator ends ============
+  3103                           
+  3104                           
+  3105 ;; *************** function _isr *****************
+  3106 ;; Defined at:
+  3107 ;;		line 14 in file "interrupts.c"
+  3108 ;; Parameters:    Size  Location     Type
+  3109 ;;		None
+  3110 ;; Auto vars:     Size  Location     Type
+  3111 ;;		None
+  3112 ;; Return value:  Size  Location     Type
+  3113 ;;		None               void
+  3114 ;; Registers used:
+  3115 ;;		None
+  3116 ;; Tracked objects:
+  3117 ;;		On entry : 0/0
+  3118 ;;		On exit  : 0/0
+  3119 ;;		Unchanged: FFFFFFFF/0
+  3120 ;; Data sizes:     COMMON   BANK0   BANK1
+  3121 ;;      Params:         0       0       0
+  3122 ;;      Locals:         0       0       0
+  3123 ;;      Temps:          0       0       0
+  3124 ;;      Totals:         0       0       0
+  3125 ;;Total ram usage:        0 bytes
+  3126 ;; Hardware stack levels used:    1
+  3127 ;; This function calls:
+  3128 ;;		Nothing
+  3129 ;; This function is called by:
+  3130 ;;		Interrupt level 1
+  3131 ;; This function uses a non-reentrant model
+  3132 ;;
+  3133  0004                     _isr:	
+  3134                           
+  3135                           ; Regs used in _isr: []
+  3136  0004  3180               	pagesel	$
+  3137  0005  0009               	retfie
+  3138  0006                     __end_of_isr:	
+  3139                           
+  3140 ;; =============== function _isr ends ============
+  3141  007E                     btemp	set	126	;btemp
+  3142  007E                     wtemp0	set	126
+
+
+HI-TECH Software PICC Macro Assembler V9.83 build 10920 
+Symbol Table                                                                                   Thu Jul 18 08:16:17 2013
+
+                           pc 0002         CommandSetAddress@data 0074                           _GIE 005F  
+                         u435 01D0                           u555 036C                           _isr 0004  
+                         wreg 0009                          l6200 03AD                          l6203 0000  
+                        ?_isr 0070                          l7800 0000                          l7803 0000  
+                        l7900 00C4                          l7821 0169                          l7806 0000  
+                        l7830 017F                          l7814 0135                          l7815 0158  
+                        l7903 00C7                          l7832 0000                          l7816 013A  
+                        l7920 0000                          l7825 0173                          l7817 013F  
+                        l7818 0144                          l7914 012D                          l7842 0068  
+                        l7827 0176                          l7819 0149                          l7835 012B  
+                        l7828 0179                          l7852 005A                          l7836 001A  
+                        l7829 017C                          l7917 0130                          l7909 00D0  
+                        l7782 0000                          l7774 0000                          l7846 0043  
+                        l9471 0381                          l7791 0000                          l7871 0073  
+                        l7863 0065                          l7855 005C                          l7839 001D  
+                        l9480 0000                          l7785 0000                          l7849 0045  
+                        l7794 0000                          l7882 008B                          l7858 0060  
+                        l9491 02E3                          l9483 03B7                          l7788 0000  
+                        l9468 037F                          l7892 00A8                          l7868 0070  
+                        l7797 0000                          l9477 0385                          l7893 00B0  
+                        l7885 0094                          l9486 0000                          l7886 009C  
+                        l7878 0080                          l9495 02ED                          l7879 0088  
+                        l7896 00B3                          l9489 02E0                          l7889 009F  
+                        l9498 02F1                          l9499 0000                          l7899 00BC  
+               ??_InitAddress 0074                          _main 03BD                          fsr1h 0007  
+                        fsr0l 0004                          indf1 0001                          fsr1l 0006  
+                        btemp 007E                 ??_ReadDataSPI 0074                          start 0006  
+               ??_ReadByteI2C 0070                  StartSystem@i 0032                  StartSystem@j 002C  
+             __end_of_InitSPI 0390                         S12360 0398                         S12358 0390  
+             __end_of_InitApp 02DD                         ??_isr 0070             CommandSetLat@data 0071  
+             __end_of_StopI2C 03BD                         l12000 0000                         l12002 0000  
+                       l12020 0000                         l12012 0000                         l11060 0000  
+                       l12100 0000                         l12006 0000                         l12030 0000  
+                       l12110 0000                         l12102 0000                         l11071 0000  
+                       l12016 01B8                         l12040 0182                         l12032 0000  
+                       l12024 0000                         l12112 0000                         l12104 0000  
+                       l12120 0000                         l12200 0000                         l11065 0000  
+                       l12018 0000                         l12042 018C                         l12034 0000  
+                       l12106 0000                         l12130 0000                         l12122 0000  
+                       l12114 0000                         l12202 0000                         l11068 019C  
+                       l12028 014E                         l12108 0000                         l12124 0000  
+                       l12116 0000                         l12132 0000                         l12140 0000  
+                       l12300 0000                         l12220 0000                         l12204 0000  
+                       l12062 0000                         l12126 0000                         l12118 0000  
+                       l12134 0000                         l12150 0000                         l12142 0000  
+                       l12230 007E                         l12222 0000                         l12214 0000  
+                       l12206 0000                         l12310 0000                         l11440 0000  
+                       l12056 0000                         l12072 0000                         l12128 0000  
+                       l12136 0000                         l12160 0000                         l12152 0000  
+                       l12144 0000                         l12240 0000                         l12224 0000  
+                       l12216 0000                         l12312 0000                         l12058 0000  
+                       l12082 0360                         l12170 0000                         l12162 0000  
+                       l12154 0000                         l12146 0000                         l12250 0000  
+                       l12234 0000                         l12226 0079                         l12306 0104  
+                       l12314 0000                         l12068 0000                         l12084 0000  
+                       l12076 035E                         l12092 0348                         l12172 0000  
+                       l12164 0000                         l12156 0000                         l12148 0000  
+                       l12260 0000                         l12244 0000                         l12236 0000  
+                       l12228 007B                         l12308 0132                         l12180 0000  
+                       l12316 03C0                         l12086 0000                         l12094 0000  
+                       l12166 0000                         l12158 0000                         l12174 0000  
+                       l12270 0000                         l12254 0000                         l12246 0000  
+                       l12238 0000                         l12190 0000                         l12182 0000  
+                       l12088 0000                         l12096 0000                         l12168 0000  
+                       l12280 0000                         l12264 0000                         l12256 0000  
+                       l12248 0000                         l12192 0000                         l12184 0000  
+                       l12098 0000                         l12178 0000                         l12290 0000  
+                       l12282 0000                         l12274 00D0                         l12266 0000  
+                       l12258 0000                         l12194 0000                         l12186 0000  
+                       l11900 0000                         l12292 0000                         l12276 0000  
+                       l12268 0000                         l12196 002A                         l11910 0000  
+                       l11902 0000                         l12294 0000                         l12286 00DE  
+                       l12278 0000                         l12198 0000                         l11912 0000  
+                       l11904 0000                         l11920 0000                         l12296 0000  
+                       l12288 0000                         l11906 0000                         l11922 0000  
+                       l11914 0000                         l11930 0000                         l12298 0000  
+                       l11908 0000                         l11924 0000                         l11916 0000  
+                       l11940 0000                         l11932 0000                         l11926 0000  
+                       l11918 0000                         l11934 0000                         l11950 0000  
+                       l11942 0000                         l11928 0000                         l11936 0000  
+                       l11960 0000                         l11952 0000                         l11944 0000  
+                       l11938 0000                         l11962 0000                         l11954 0000  
+                       l11946 0000                         l11970 0000                         l11964 0000  
+                       l11956 0000                         l11948 0000                         l11972 0000  
+                       l11980 0000                         l11958 0000                         l11974 0000  
+                       l11990 0000                         l11982 0000                         l11968 0000  
+                       l11992 0000                         l11984 0000                         l11976 0000  
+                       l11994 0000                         l11986 0000                         l11978 0000  
+                       l11996 0000                         l11988 0000                         l11998 0000  
+                       ?_main 0070           _ConfigureOscillator 03A8                    _EraseFlash 036F  
+                       wtemp0 007E              __end_of_DelaySPI 036F          ?_ConfigureOscillator 0070  
+         __end_of_InitAddress 034C                 StartSystem@tc 0034                 StartSystem@rw 002D  
+                __end_of_main 03C2           __end_of_ReadDataSPI 01DE          __end_of_CommandGetAn 0191  
+         __end_of_ReadByteI2C 02F5                        ??_main 007D              ReadFlash@address 0070  
+            __end_of_StartI2C 0388                  ReadDataSPI@i 0024             EraseFlash@address 0070  
+                      _ADRESH 009C                        _ADRESL 009B                        _ANSELA 018C  
+                      _ANSELC 018E                        i1l3091 0000                        _PMADRH 0192  
+                      _PMADRL 0191                        _PMDATH 0194                        _PMDATL 0193  
+                      _PMCON2 0196            __size_of_ReadFlash 0018                     ??_InitSPI 0072  
+                   ??_InitApp 0072         ??_ConfigureOscillator 0070                     ??_StopI2C 0070  
+                ReadByteI2C@i 0071                WriteFlash@data 0070            StartSystem@address 0030  
+          CommandSetTris@data 0071                   ?_EraseFlash 0070            StartSystem@command 0031  
+                 _InitAddress 0338                   _ReadDataSPI 0191                StartSystem@adc 002E  
+                 _ReadByteI2C 02DD                __pcstackCOMMON 0070                    _WriteFlash 030D  
+               ??_StartSystem 007C                 ??_UnlockFlash 0070             __end_of_ReadFlash 030D  
+              _OPTION_REGbits 0095                     ?_DelaySPI 0070         __end_of_CommandSetLat 0263  
+                  __pbssBANK0 0039                    __pmaintext 03BD         __size_of_CommandGetAn 005E  
+         __size_of_EraseFlash 0010       __size_of_CommandGetTemp 0012       __size_of_CommandGetPort 0024  
+                   ?_StartI2C 0070                    __pintentry 0004                       _ADDRESS 003D  
+     __size_of_CommandSetTris 0043               ReadDataSPI@data 0020                    ??_DelaySPI 0070  
+         __end_of_StartSystem 0133           __end_of_UnlockFlash 03A8             _CommandSetAddress 0324  
+          ?_CommandSetAddress 0070                  _CommandGetAn 0133                       _InitSPI 0388  
+                     _InitApp 02BE           CommandGetAn@channel 0075                 ReadFlash@data 0072  
+         ??_CommandSetAddress 0074             _CommandSetPullUps 0263                       _StopI2C 03B7  
+          ?_CommandSetPullUps 0070                   ?_WriteFlash 0070                    ??_StartI2C 0070  
+         ??_CommandSetPullUps 0070              CommandGetAn@data 0073                  __size_of_isr 0002  
+   __end_of_CommandSetAddress 0338                     DelaySPI@i 0070          end_of_initialization 03B5  
+   __end_of_CommandSetPullUps 029A                   _StartSystem 0008                     _PORTAbits 000C  
+                 _UnlockFlash 03A0                     _PORTCbits 000E                     _TRISAbits 008C  
+                   _TRISCbits 008E                  ??_EraseFlash 0072           __size_of_WriteFlash 0017  
+ __end_of_ConfigureOscillator 03B0                  ?_InitAddress 0070                  ?_ReadDataSPI 0070  
+             StartSystem@data 0038                  ?_ReadByteI2C 0070                _CommandGetTemp 034C  
+              _CommandGetPort 029A            __end_of_EraseFlash 037F                _CommandSetTris 01DE  
+         start_initialization 03B0    __size_of_CommandSetAddress 0014            InitAddress@address 0074  
+                   _ReadFlash 02F5                   __end_of_isr 0006             __size_of_DelaySPI 0011  
+  __size_of_CommandSetPullUps 0037        __end_of_CommandGetTemp 035E        __end_of_CommandGetPort 02BE  
+      __end_of_CommandSetTris 0221             __size_of_StartI2C 0009                 __pcstackBANK0 0020  
+                  ?_ReadFlash 0070                      ?_InitSPI 0070                      ?_InitApp 0070  
+             ReadByteI2C@data 0070               ?_CommandGetTemp 0028               ?_CommandGetPort 0070  
+                    ?_StopI2C 0070                  ??_WriteFlash 0074                     __ptext510 0338  
+                   __ptext502 0000                     __ptext511 035E                     __ptext503 0008  
+                   __ptext520 0263                     __ptext512 03B7                     __ptext504 0324  
+                   __ptext521 01DE                     __ptext513 02DD                     __ptext505 02BE  
+                   __ptext522 0221                     __ptext514 037F                     __ptext506 034C  
+                   __ptext523 03A8                     __ptext515 0133                     __ptext507 030D  
+                   __ptext516 0191                     __ptext508 036F                     __ptext517 029A  
+                   __ptext509 0388                     __ptext518 03A0                     __ptext519 02F5  
+      __size_of_CommandSetLat 0042               ?_CommandSetTris 0070                     __pswtext1 0390  
+                   __pswtext2 0398                      _DATA_OUT 0039            __end_of_WriteFlash 0324  
+                    _LATAbits 010C                      _LATCbits 010E          __size_of_InitAddress 0014  
+        __size_of_ReadDataSPI 004D          __size_of_ReadByteI2C 0018                  ?_StartSystem 0070  
+                ?_UnlockFlash 0070                    _ADCON0bits 009D                    _ADCON1bits 009E  
+                    _WPUAbits 020C                      _DelaySPI 035E                   ??_ReadFlash 0072  
+               _CommandSetLat 0221             WriteFlash@address 0072              __size_of_InitSPI 0008  
+            __size_of_InitApp 001F            CommandGetTemp@temp 0078                      _StartI2C 037F  
+            __size_of_StopI2C 0006            CommandGetPort@data 0071         CommandSetPullUps@data 0071  
+                  _ANSELAbits 018C                    _ANSELCbits 018E                ?_CommandSetLat 0070  
+               __size_of_main 0005  __size_of_ConfigureOscillator 0008                   _OSCSTATbits 009A  
+                    intlevel1 0000              ??_CommandGetTemp 0078              ??_CommandGetPort 0070  
+               ?_CommandGetAn 0070                    _PMCON1bits 0195              ??_CommandSetTris 0070  
+                  _OSCCONbits 0099          __size_of_StartSystem 012B          __size_of_UnlockFlash 0008  
+             ??_CommandSetLat 0070                ??_CommandGetAn 0072          StartSystem@temp_data 0033  

@@ -1,0 +1,24 @@
+_EraseFlash: CODE, 879 0 16
+_InitAddress: CODE, 824 0 20
+_StartSystem: CODE, 8 0 299
+_ConfigureOscillator: CODE, 936 0 8
+_main: CODE, 957 0 5
+_DelaySPI: CODE, 862 0 17
+_InitApp: CODE, 702 0 31
+_UnlockFlash: CODE, 928 0 8
+_isr: CODE, 4 0 2
+_CommandGetAn: CODE, 307 0 94
+_ReadByteI2C: CODE, 733 0 24
+_CommandSetLat: CODE, 545 0 66
+_StopI2C: CODE, 951 0 6
+_WriteFlash: CODE, 781 0 23
+_InitSPI: CODE, 904 0 8
+_ReadDataSPI: CODE, 401 0 77
+_ReadFlash: CODE, 757 0 24
+_CommandGetTemp: CODE, 844 0 18
+_CommandSetTris: CODE, 478 0 67
+_CommandGetPort: CODE, 666 0 36
+_StartI2C: CODE, 895 0 9
+_CommandSetPullUps: CODE, 611 0 55
+_CommandSetAddress: CODE, 804 0 20
+Total: 933

@@ -1,0 +1,319 @@
+/*
+ * SPI testing utility (using spidev driver)
+ *
+ * Copyright (c) 2007  MontaVista Software, Inc.
+ * Copyright (c) 2007  Anton Vorontsov <avorontsov@ru.mvista.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License.
+ *
+ * Cross-compile with cross-gcc -I/path/to/cross-kernel/include
+ */
+
+#include <stdint.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/types.h>
+#include <linux/spi/spidev.h>
+
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+
+//A continuacion mis definiciones para poder compilarlo con los spidev.h y spi.h que tiene el kernel que nos proporcionaron en el curso, basadas en las que se encuentran en: http://lxr.free-electrons.com/source/include/uapi/linux/spi/spidev.h#L46 y http://lxr.free-electrons.com/source/include/linux/spi/spi.h#L96 
+//####.....####....####....
+
+#define SPI_TX_DUAL     0x100                   /* transmit with 2 wires */
+#define SPI_TX_QUAD     0x200                   /* transmit with 4 wires */
+#define SPI_RX_DUAL     0x400                   /* receive with 2 wires */
+#define SPI_RX_QUAD     0x800                   /* receive with 4 wires */
+
+#define SPI_IOC_RD_MODE32               _IOR(SPI_IOC_MAGIC, 5, __u32)
+#define SPI_IOC_WR_MODE32               _IOW(SPI_IOC_MAGIC, 5, __u32) 
+
+//####...#####....####....
+
+static void pabort(const char *s)
+{
+	perror(s);
+	abort();
+}
+
+//static const char *device = "/dev/spiprueba";
+static const char *device = "/dev/spidev1.1";
+static uint32_t mode;
+static uint8_t bits = 8;
+static uint32_t speed = 500000;
+static uint16_t delay;
+static double temperatura;
+
+static void transfer(int fd)
+{
+	int ret;
+	uint8_t tx[] = {
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0x40, 0x00, 0x00, 0x00, 0x00, 0x95,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xDE, 0xAD, 0xBE, 0xEF, 0xBA, 0xAD,
+		0xF0, 0x0D,
+	};
+	uint8_t rx[ARRAY_SIZE(tx)] = {0, };
+	struct spi_ioc_transfer tr = {
+		.tx_buf = (unsigned long)tx,
+		.rx_buf = (unsigned long)rx,
+		.len = ARRAY_SIZE(tx),
+		.delay_usecs = delay,
+		.speed_hz = speed,
+		.bits_per_word = bits,
+	};
+
+	/*if (!(mode & SPI_LOOP)) {
+		if (mode & (SPI_TX_QUAD | SPI_TX_DUAL))
+			tr.rx_buf = 0;
+		else if (mode & (SPI_RX_QUAD | SPI_RX_DUAL))
+			tr.tx_buf = 0;
+	}*/
+
+	tr.tx_buf = 0;
+	
+	//recibe dato
+	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
+	if (ret < 1)
+		pabort("no se puede enviar spi message");
+
+	uint16_t part0 = ((uint16_t)rx[0] << 8) | rx[1];
+	uint8_t compNegativo = rx[0];
+
+	//uint8_t compNegativo = ~rx[0]; // prueba negativo
+	//printf("%.2X ", part0);
+	//puts("");
+
+	temperatura = 0;
+	double negativo = -1;
+	int cont = 0;
+	int potencia = 1;
+
+	part0 = part0 >> 2;
+
+	//part0 = ~part0 + 1; //prueba negativo complemento a 2
+
+	if((compNegativo >> 7) % 2 == 0){ //comprueba si es positivo	
+		negativo = 1;//positivo
+	}else{
+		negativo = -1;//negativo
+		part0 = ~part0 + 1;//complemento a 2
+	}
+	for( cont = 0; cont < 15; cont++){//obtiene el valor en magnitud de temperatura
+	
+		if(cont < 2)
+			temperatura = temperatura + (part0 % 2) * 0.25 * (cont + 1);
+		else{
+			temperatura = temperatura + (part0 % 2) * potencia;
+			potencia = 2*potencia;
+		}
+		part0 = part0 >> 1;
+	}
+	temperatura = temperatura * negativo;//signo
+	/*printf("%F ", temperatura);
+	puts("");*/	
+	
+	fprintf(stdout, "%F",temperatura);
+
+	//deteccion de errores
+
+	uint8_t error = rx[3];
+	int errorOut = 0;
+	if(error % 2 == 1)
+		errorOut = 1;//termocupla abierta
+	else if((error >> 1) % 2 == 1)
+		errorOut = 2;//termocupla a GND
+	else if((error >> 2) % 2 == 1)
+		errorOut = 3;//termocupla a VCC
+	else errorOut = 0;//termocupla bien
+
+	//printf("%F " , errorOut);
+	//puts("");
+
+	//impresion de prueba en hexadecimal
+	/*for (ret = 0; ret < ARRAY_SIZE(tx); ret++) {
+		if (!(ret % 6))
+			puts("");
+		printf("%.2x ", rx[ret]);
+	}
+	puts("");*/
+
+	//escritura en archivos
+	FILE *archivo;
+ 
+ 	archivo = fopen ( "/var/www/error", "w" );
+	
+	fprintf(archivo, "%d",errorOut);
+ 
+ 	fclose ( archivo );
+}
+
+static void print_usage(const char *prog)
+{
+	/*printf("Usage: %s [-DsbdlHOLC3]\n", prog);
+	puts("  -D --device   device to use (default /dev/spidev1.1)\n"
+	     "  -s --speed    max speed (Hz)\n"
+	     "  -d --delay    delay (usec)\n"
+	     "  -b --bpw      bits per word \n"
+	     "  -l --loop     loopback\n"
+	     "  -H --cpha     clock phase\n"
+	     "  -O --cpol     clock polarity\n"
+	     "  -L --lsb      least significant bit first\n"
+	     "  -C --cs-high  chip select active high\n"
+	     "  -3 --3wire    SI/SO signals shared\n"
+	     "  -N --no-cs    no chip select\n"
+	     "  -R --ready    slave pulls low to pause\n"
+	     "  -2 --dual     dual transfer\n"
+	     "  -4 --quad     quad transfer\n");*/
+	exit(1);
+}
+
+static void parse_opts(int argc, char *argv[])
+{
+	while (1) {
+		static const struct option lopts[] = {
+			{ "device",  1, 0, 'D' },
+			{ "speed",   1, 0, 's' },
+			{ "delay",   1, 0, 'd' },
+			{ "bpw",     1, 0, 'b' },
+			{ "loop",    0, 0, 'l' },
+			{ "cpha",    0, 0, 'H' },
+			{ "cpol",    0, 0, 'O' },
+			{ "lsb",     0, 0, 'L' },
+			{ "cs-high", 0, 0, 'C' },
+			{ "3wire",   0, 0, '3' },
+			{ "no-cs",   0, 0, 'N' },
+			{ "ready",   0, 0, 'R' },
+			{ "dual",    0, 0, '2' },
+			{ "quad",    0, 0, '4' },
+			{ NULL, 0, 0, 0 },
+		};
+		int c;
+
+		c = getopt_long(argc, argv, "D:s:d:b:lHOLC3NR24", lopts, NULL);
+
+		if (c == -1)
+			break;
+
+		switch (c) {
+		case 'D':
+			device = optarg;
+			break;
+		case 's':
+			speed = atoi(optarg);
+			break;
+		case 'd':
+			delay = atoi(optarg);
+			break;
+		case 'b':
+			bits = atoi(optarg);
+			break;
+		case 'l':
+			mode |= SPI_LOOP;
+			break;
+		case 'H':
+			mode |= SPI_CPHA;
+			break;
+		case 'O':
+			mode |= SPI_CPOL;
+			break;
+		case 'L':
+			mode |= SPI_LSB_FIRST;
+			break;
+		case 'C':
+			mode |= SPI_CS_HIGH;
+			break;
+		case '3':
+			mode |= SPI_3WIRE;
+			break;
+		case 'N':
+			mode |= SPI_NO_CS;
+			break;
+		case 'R':
+			mode |= SPI_READY;
+			break;
+		case '2':
+			mode |= SPI_TX_DUAL;
+			break;
+		case '4':
+			mode |= SPI_TX_QUAD;
+			break;
+		default:
+			print_usage(argv[0]);
+			break;
+		}
+	}
+	/*if (mode & SPI_LOOP) {
+		if (mode & SPI_TX_DUAL)
+			mode |= SPI_RX_DUAL;
+		if (mode & SPI_TX_QUAD)
+			mode |= SPI_RX_QUAD;
+	}*/
+
+	mode |= SPI_RX_DUAL;
+}
+
+int main(int argc, char *argv[])
+{
+	int ret = 0;
+	int fd;	
+
+	parse_opts(argc, argv);
+
+	fd = open(device, O_RDWR);
+	if (fd < 0)
+		pabort("no se puede abrir dispositivo");
+
+	/*
+	 * spi mode
+	 */
+	/*ret = ioctl(fd, SPI_IOC_WR_MODE32, &mode);
+	if (ret == -1)
+		pabort("no se puede configurar spi mode");*/
+
+	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &mode);
+	if (ret == -1)
+		pabort("no se puede obtener spi mode");
+
+	/*
+	 * bits per word
+	 */
+	/*ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits);
+	if (ret == -1)
+		pabort("no se puede configurar bits per word");*/
+
+	ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &bits);
+	if (ret == -1)
+		pabort("no se puede obtener bits per word");
+
+	/*
+	 * max speed hz
+	 */
+	/*ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
+	if (ret == -1)
+		pabort("no se puede configurar max speed hz");*/
+
+	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
+	if (ret == -1)
+		pabort("no se puede obtener max speed hz");
+
+	/*printf("spi mode: 0x%x\n", mode);
+	printf("bits per word: %d\n", bits);
+	printf("max speed: %d Hz (%d KHz)\n", speed, speed/1000);*/
+
+	transfer(fd);
+
+	close(fd);
+
+	return ret;
+}
+
