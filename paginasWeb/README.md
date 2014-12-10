@@ -1,5 +1,5 @@
 Los archivos usados al final son:
-server.js \n
+server.js
 index.html
 guia1.html (grafica de la temperatura)
 guias.html
